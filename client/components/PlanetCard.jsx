@@ -16,66 +16,10 @@ import { generateDescriptorText } from '../utils/texts.js'
 import { deletePlanet } from '../utils/fetcher.js'
 
 import { DispatchContext } from '../state/PlanetContext.js'
-
-const lowSentinelStyle = {}
-const highSentinelStyle = { bgcolor: 'warning.main', color: 'black' }
-const aggressiveSentinelStyle = { bgcolor: 'error.main', color: 'black' }
-const corruptSentinelStyle = { bgcolor: 'blue', color: 'black' }
-
-const extremeStyle = { bgcolor: 'error.main', color: 'black' }
-const exoticStyle = { bgcolor: 'text.secondary', color: 'black' }
-const infestedStyle = { bgcolor: 'success.main', color: 'black' }
-const extremeInfestedStyle = {
-  bgcolor: 'linear-gradient(to right, lightcoral 50%, lightgreen 50%)',
-  color: 'black'
-}
+import SentinelText from './SentinelText.jsx'
 
 export default function PlanetCard ({ planet }) {
   const dispatch = React.useContext(DispatchContext)
-
-  const lowSentinelText = (
-    <Typography
-      variant="body2"
-      color="textSecondary"
-      component="span"
-      sx={lowSentinelStyle}
-    >
-      Sentinel Level: Low
-    </Typography>
-  )
-
-  const highSentinelText = (
-    <Typography
-      variant="body2"
-      color="textSecondary"
-      component="span"
-      sx={highSentinelStyle}
-    >
-      Sentinel Level: High
-    </Typography>
-  )
-
-  const aggressiveSentinelText = (
-    <Typography
-      variant="body2"
-      color="textSecondary"
-      component="span"
-      sx={aggressiveSentinelStyle}
-    >
-      Sentinel Level: AGGRESSIVE
-    </Typography>
-  )
-
-  const corruptSentinelText = (
-    <Typography
-      variant="body2"
-      color="textSecondary"
-      component="span"
-      sx={corruptSentinelStyle}
-    >
-      Sentinel Level: CORRUPT
-    </Typography>
-  )
 
   const handleDetailsClick = (event) => {
     event.preventDefault()
@@ -109,7 +53,7 @@ export default function PlanetCard ({ planet }) {
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
-      <Card>
+      <Card sx={getCardBorder(planet.extreme, planet.infested, planet.exotic)}>
         <CardActionArea onClick={handleDetailsClick}>
           {/* Header */}
           <CardHeader
@@ -121,13 +65,7 @@ export default function PlanetCard ({ planet }) {
           {/* Content */}
           <CardContent>
             {/* Sentinel Text */}
-            {planet.sentinels === 'low'
-              ? lowSentinelText
-              : planet.sentinels === 'high'
-                ? highSentinelText
-                : planet.sentinels === 'aggressive'
-                  ? aggressiveSentinelText
-                  : corruptSentinelText}
+            <SentinelText sentinels={planet.sentinels} />
 
             {/* System */}
             <Typography variant="body2" color="textSecondary" component="p">
@@ -186,4 +124,45 @@ PlanetCard.propTypes = {
     sentinels: PropTypes.string.isRequired,
     system: PropTypes.string.isRequired
   }).isRequired
+}
+
+const border = 2
+const borderRadius = border + 'px'
+
+function getCardBorder (isExtreme, isInfested, isExotic) {
+  if (isExtreme && isInfested) {
+    return {
+      border,
+      borderColor: 'linear-gradient(to right, lightcoral 50%, lightgreen 50%)',
+      borderRadius
+    }
+  }
+  else if (isExtreme) {
+    return {
+      border,
+      borderColor: 'error.main',
+      borderRadius
+    }
+  }
+  else if (isInfested) {
+    return {
+      border,
+      borderColor: 'success.main',
+      borderRadius
+    }
+  }
+  else if (isExotic) {
+    return {
+      border,
+      borderColor: 'text.secondary',
+      borderRadius
+    }
+  }
+  else {
+    return {
+      border,
+      borderColor: 'black',
+      borderRadius
+    }
+  }
 }
