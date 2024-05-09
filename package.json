@@ -1,0 +1,44 @@
+{
+  "name": "nms-browser",
+  "version": "0.1.0",
+  "description": "A webapp to help search through planets I've found in No Man's Sky",
+  "main": "client/index.jsx",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "node server/server.js",
+    "server:dev": "nodemon server/server.js",
+    "client": "esbuild client/index.jsx --target=es6 --bundle --minify --outdir=public",
+    "client:dev": "esbuild client/index.jsx --target=es6 --watch --bundle --sourcemap --outdir=public"
+  },
+  "author": "Will Canter",
+  "license": "MIT",
+  "prettier": {
+    "options": {
+      "editorconfig": true
+    }
+  },
+  "devDependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.17",
+    "esbuild": "^0.21.1",
+    "eslint": "^8.57.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "nodemon": "^3.1.0",
+    "prettier": "^3.2.5",
+    "prettier-eslint": "^16.3.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongodb": "^6.6.1"
+  }
+}

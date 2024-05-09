@@ -1,0 +1,27 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "standard"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": { "jsx": true },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks"],
+  "rules": {
+    "brace-style": ["warn", "stroustrup", { "allowSingleLine": true }],
+    "camelcase": "warn",
+    "key-spacing": "warn",
+    "no-unused-vars": "warn",
+    "semi": "warn",
+    "valid-typeof": "off"
+  },
+  "settings": { "react": { "version": "detect" } }
+}
