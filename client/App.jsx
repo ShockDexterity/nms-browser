@@ -11,22 +11,25 @@ import {
   PlanetContext,
   planetReducer
 } from './state/PlanetContext.js'
+import DetailsDialog from './components/DetailsDialog.jsx'
 
 export default function App (props) {
   const [reducer, dispatch] = React.useReducer(planetReducer, REDUCER_INIT)
 
   return (
-    <Container>
-      <Header
-        title="No Man's Sky Planet Browser"
-        subtitle="Click on a planet card for more information"
-      />
+    <PlanetContext.Provider value={reducer}>
+      <DispatchContext.Provider value={dispatch}>
+        <Container>
+          <Header
+            title="No Man's Sky Planet Browser"
+            subtitle="Click on a planet card for more information"
+          />
 
-      <PlanetContext.Provider value={reducer}>
-        <DispatchContext.Provider value={dispatch}>
           <PlanetGrid />
-        </DispatchContext.Provider>
-      </PlanetContext.Provider>
-    </Container>
+
+          <DetailsDialog />
+        </Container>
+      </DispatchContext.Provider>
+    </PlanetContext.Provider>
   )
 }

@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 
 import Typography from '@mui/material/Typography'
 
-export default function SentinelText ({ sentinels }) {
+export default function SentinelText ({
+  sentinels,
+  color = 'textPrimary',
+  variant = 'body2'
+}) {
   const level =
     sentinels === 'low'
       ? (
@@ -22,9 +26,9 @@ export default function SentinelText ({ sentinels }) {
             )
 
   return (
-    <Typography variant="body2" color="textSecondary" component="span">
+    <Typography variant={variant} color={color} component="span">
       Sentinel Level:{' '}
-      <Typography variant="body2" component="span" sx={getStyle(sentinels)}>
+      <Typography variant={variant} component="span" sx={getStyle(sentinels)}>
         {level}
       </Typography>
     </Typography>
@@ -33,7 +37,9 @@ export default function SentinelText ({ sentinels }) {
 
 SentinelText.propTypes = {
   sentinels: PropTypes.oneOf(['low', 'high', 'aggressive', 'corrupt'])
-    .isRequired
+    .isRequired,
+  color: PropTypes.string,
+  variant: PropTypes.string
 }
 
 const border = 2

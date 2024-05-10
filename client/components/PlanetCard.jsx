@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography'
 import { DispatchContext } from '../state/PlanetContext.js'
 import SentinelText from './SentinelText.jsx'
 
-import { generateDescriptorText } from '../utils/texts.js'
+import { generateBiomeBorder, generateDescriptorText } from '../utils/texts.js'
 import { deletePlanet } from '../utils/fetcher.js'
 
 export default function PlanetCard ({ planet }) {
@@ -21,6 +21,7 @@ export default function PlanetCard ({ planet }) {
 
   const handleDetailsClick = (event) => {
     event.preventDefault()
+    console.log('details clicked')
     dispatch({ type: 'SET_PLANET', planet })
     dispatch({ type: 'DETAILS', title: planet.name })
   }
@@ -51,7 +52,9 @@ export default function PlanetCard ({ planet }) {
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
-      <Card sx={getCardBorder(planet.extreme, planet.infested, planet.exotic)}>
+      <Card
+        sx={generateBiomeBorder(planet.extreme, planet.infested, planet.exotic)}
+      >
         <CardActionArea onClick={handleDetailsClick}>
           {/* Header */}
           <CardHeader
@@ -63,7 +66,7 @@ export default function PlanetCard ({ planet }) {
           {/* Content */}
           <CardContent>
             {/* Sentinel Text */}
-            <SentinelText sentinels={planet.sentinels} />
+            <SentinelText sentinels={planet.sentinels} color="textSecondary" />
 
             {/* System */}
             <Typography variant="body2" color="textSecondary" component="p">
@@ -79,7 +82,7 @@ export default function PlanetCard ({ planet }) {
             color="warning"
             onClick={(e) => {
               e.preventDefault()
-              console.log('TODO: IMPLEMENT EDIT CLICK')
+              window.alert('Edit not implemented')
             }}
           >
             Edit
@@ -91,7 +94,7 @@ export default function PlanetCard ({ planet }) {
             color="error"
             onClick={(e) => {
               e.preventDefault()
-              console.log('TODO: IMPLEMENT DELETE CLICK')
+              window.alert('Delete not implemented')
             }}
           >
             Delete
@@ -122,45 +125,4 @@ PlanetCard.propTypes = {
     sentinels: PropTypes.string.isRequired,
     system: PropTypes.string.isRequired
   }).isRequired
-}
-
-const border = 2
-const borderRadius = border + 'px'
-
-function getCardBorder (isExtreme, isInfested, isExotic) {
-  if (isExtreme && isInfested) {
-    return {
-      border,
-      borderColor: 'linear-gradient(to right, lightcoral 50%, lightgreen 50%)',
-      borderRadius
-    }
-  }
-  else if (isExtreme) {
-    return {
-      border,
-      borderColor: 'error.main',
-      borderRadius
-    }
-  }
-  else if (isInfested) {
-    return {
-      border,
-      borderColor: 'success.main',
-      borderRadius
-    }
-  }
-  else if (isExotic) {
-    return {
-      border,
-      borderColor: 'text.secondary',
-      borderRadius
-    }
-  }
-  else {
-    return {
-      border,
-      borderColor: 'black',
-      borderRadius
-    }
-  }
 }

@@ -6,8 +6,8 @@ export const DispatchContext = createContext(null)
 export const REDUCER_INIT = {
   display: '',
   title: '',
-  show_dialog: false,
-  show_snackbar: false,
+  showDialog: '',
+  showSnackbar: false,
   planet: null,
   refresh: true
 }
@@ -20,17 +20,11 @@ export function planetReducer (state, action) {
     case 'STOP_REFRESH':
       return { ...state, refresh: false }
 
-    case 'SHOW_DIALOG':
-      return { ...state, show_dialog: true }
-
-    case 'HIDE_DIALOG':
-      return { ...state, show_dialog: false }
-
     case 'SHOW_SNACKBAR':
-      return { ...state, show_snackbar: true }
+      return { ...state, showSnackbar: true }
 
     case 'HIDE_SNACKBAR':
-      return { ...state, show_snackbar: false }
+      return { ...state, showSnackbar: false }
 
     case 'SET_SNACKBAR_SEVERITY':
       return { ...state, snackbar_severity: action.severity }
@@ -41,59 +35,31 @@ export function planetReducer (state, action) {
     case 'DETAILS':
       return {
         ...state,
-        display: 'details',
-        dialog_title: action.title,
-        show_dialog: true
+        dialogTitle: action.title,
+        showDialog: 'details'
       }
 
     case 'ADD':
       return {
         ...state,
-        display: 'add',
-        dialog_title: 'Add a new Planet',
-        show_dialog: true
+        dialogTitle: 'Add a new Planet',
+        showDialog: 'add'
       }
 
     case 'EDIT':
       return {
         ...state,
-        display: 'edit',
-        dialog_title: action.title,
-        show_dialog: true
+        dialogTitle: action.title,
+        showDialog: 'edit'
       }
 
-    case 'REQUEST':
-      return { ...state, requestedID: action.id }
-
-    case 'RECEIVE':
-      return { ...state, planet: action.planet, show_dialog: true }
+    case 'CLOSE_DIALOG':
+      return { ...state, showDialog: '' }
 
     case 'SET_PLANET':
       return { ...state, planet: action.planet }
 
     default:
       return state
-  }
-}
-
-export async function getPlanet (id, dispatch) {
-  const fetchPlanet = async () => {
-    try {
-      const response = await fetch(`./planets/${id}`)
-      const planet = await response.json()
-      dispatch({ type: 'RECEIVE', planet })
-    }
-    catch (error) {
-      console.error(error)
-    }
-  }
-
-  try {
-    const planet = await fetchPlanet()
-    dispatch({ type: 'RECEIVE', planet })
-  }
-  catch (error) {
-    console.error(error)
-    dispatch({ type: 'RECEIVE', planet: null })
   }
 }
