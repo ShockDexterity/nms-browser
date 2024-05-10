@@ -8,13 +8,10 @@ import App from './App.jsx'
 document.addEventListener('DOMContentLoaded', () => {
   createRoot(document.querySelector('#root')).render(
     <React.StrictMode>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={createTheme({ palette: { mode: 'dark' } })}>
         <CssBaseline />
         <App />
       </ThemeProvider>
     </React.StrictMode>
   )
 })
-
-const darkTheme = createTheme({ palette: { mode: 'dark' } })
-// const lightTheme = createTheme({ palette: { mode: 'light' } })

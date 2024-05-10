@@ -1,11 +1,13 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Grid } from '@mui/material'
+import Grid from '@mui/material/Grid'
+
+import PlanetCard from './PlanetCard.jsx'
 
 import { PlanetContext, DispatchContext } from '../state/PlanetContext.js'
 
 import { getPlanets } from '../utils/fetcher.js'
-import PlanetCard from './PlanetCard.jsx'
 
 export default function PlanetGrid ({ planetFilter = '', ...props }) {
   const [planets, setPlanets] = React.useState([])
@@ -67,6 +69,11 @@ export default function PlanetGrid ({ planetFilter = '', ...props }) {
       </Grid>
     )
   }
+}
+
+// PropTypes
+PlanetGrid.propTypes = {
+  planetFilter: PropTypes.string
 }
 
 function checkResources (resources, special, value) {

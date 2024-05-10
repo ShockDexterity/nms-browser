@@ -6,7 +6,8 @@ export const DispatchContext = createContext(null)
 export const REDUCER_INIT = {
   display: '',
   title: '',
-  show: false,
+  show_dialog: false,
+  show_snackbar: false,
   planet: null,
   refresh: true
 }
@@ -19,41 +20,53 @@ export function planetReducer (state, action) {
     case 'STOP_REFRESH':
       return { ...state, refresh: false }
 
-    case 'SHOW':
-      return { ...state, show: true }
+    case 'SHOW_DIALOG':
+      return { ...state, show_dialog: true }
 
-    case 'HIDE':
-      return { ...state, show: false }
+    case 'HIDE_DIALOG':
+      return { ...state, show_dialog: false }
+
+    case 'SHOW_SNACKBAR':
+      return { ...state, show_snackbar: true }
+
+    case 'HIDE_SNACKBAR':
+      return { ...state, show_snackbar: false }
+
+    case 'SET_SNACKBAR_SEVERITY':
+      return { ...state, snackbar_severity: action.severity }
+
+    case 'SET_SNACKBAR_MESSAGE':
+      return { ...state, snackbar_message: action.message }
 
     case 'DETAILS':
       return {
         ...state,
         display: 'details',
-        title: action.title,
-        show: true
+        dialog_title: action.title,
+        show_dialog: true
       }
 
     case 'ADD':
       return {
         ...state,
         display: 'add',
-        title: 'Add a new Planet',
-        show: true
+        dialog_title: 'Add a new Planet',
+        show_dialog: true
       }
 
     case 'EDIT':
       return {
         ...state,
         display: 'edit',
-        title: action.title,
-        show: true
+        dialog_title: action.title,
+        show_dialog: true
       }
 
     case 'REQUEST':
       return { ...state, requestedID: action.id }
 
     case 'RECEIVE':
-      return { ...state, planet: action.planet, show: true }
+      return { ...state, planet: action.planet, show_dialog: true }
 
     case 'SET_PLANET':
       return { ...state, planet: action.planet }

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Typography } from '@mui/material'
+import Typography from '@mui/material/Typography'
 
 export default function SentinelText ({ sentinels }) {
   const level =
@@ -32,7 +32,8 @@ export default function SentinelText ({ sentinels }) {
 }
 
 SentinelText.propTypes = {
-  sentinels: PropTypes.string.isRequired
+  sentinels: PropTypes.oneOf(['low', 'high', 'aggressive', 'corrupt'])
+    .isRequired
 }
 
 const border = 2

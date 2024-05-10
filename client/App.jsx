@@ -1,6 +1,9 @@
 import React from 'react'
 
-import { Container } from '@mui/material'
+import Container from '@mui/material/Container'
+
+import PlanetGrid from './components/PlanetGrid.jsx'
+import Header from './components/Header.jsx'
 
 import {
   DispatchContext,
@@ -8,8 +11,6 @@ import {
   PlanetContext,
   planetReducer
 } from './state/PlanetContext.js'
-import PlanetGrid from './components/PlanetGrid.jsx'
-import Header from './components/Header.jsx'
 
 export default function App (props) {
   const [reducer, dispatch] = React.useReducer(planetReducer, REDUCER_INIT)
