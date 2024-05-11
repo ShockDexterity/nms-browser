@@ -12,7 +12,7 @@ import { generateBiomeBorder } from '../utils/texts.js'
 import SentinelText from './SentinelText.jsx'
 
 export default function DetailsDialog (props) {
-  const { dialogTitle, showDialog, planet } = React.useContext(PlanetContext)
+  const { showDialog, dialogTitle, planet } = React.useContext(PlanetContext)
   const dispatch = React.useContext(DispatchContext)
 
   const handleClose = () => {
@@ -28,7 +28,7 @@ export default function DetailsDialog (props) {
       open={showDialog === 'details'}
       onClose={handleClose}
       fullWidth={true}
-      maxWidth="sm"
+      maxWidth={'sm'}
       PaperProps={{
         sx: generateBiomeBorder(
           planet.extreme,

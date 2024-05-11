@@ -56,19 +56,15 @@ export default function PlanetCard ({ planet }) {
         sx={generateBiomeBorder(planet.extreme, planet.infested, planet.exotic)}
       >
         <CardActionArea onClick={handleDetailsClick}>
-          {/* Header */}
           <CardHeader
             title={planet.name}
             titleTypographyProps={{ variant: 'h6' }}
             subheader={generateDescriptorText(planet.descriptor, planet.moon)}
           />
 
-          {/* Content */}
           <CardContent>
-            {/* Sentinel Text */}
             <SentinelText sentinels={planet.sentinels} color="textSecondary" />
 
-            {/* System */}
             <Typography variant="body2" color="textSecondary" component="p">
               {planet.system} System
             </Typography>
@@ -76,7 +72,6 @@ export default function PlanetCard ({ planet }) {
         </CardActionArea>
 
         <CardActions>
-          {/* Edit Button */}
           <Button
             size="small"
             color="warning"
@@ -88,7 +83,6 @@ export default function PlanetCard ({ planet }) {
             Edit
           </Button>
 
-          {/* Delete Button */}
           <Button
             size="small"
             color="error"
