@@ -8,7 +8,7 @@ import {
 } from '@mui/material'
 
 import { DispatchContext, PlanetContext } from '../state/PlanetContext.js'
-import { generateBiomeBorder } from '../utils/texts.js'
+import { generateBiomeBorder } from '../utils/styles.js'
 import SentinelText from './SentinelText.jsx'
 
 export default function DetailsDialog (props) {

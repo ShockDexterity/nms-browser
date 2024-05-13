@@ -13,7 +13,8 @@ import Typography from '@mui/material/Typography'
 import { DispatchContext } from '../state/PlanetContext.js'
 import SentinelText from './SentinelText.jsx'
 
-import { generateBiomeBorder, generateDescriptorText } from '../utils/texts.js'
+import { generateDescriptorText } from '../utils/texts.js'
+import { generateBiomeBorder } from '../utils/styles.js'
 import { deletePlanet } from '../utils/fetcher.js'
 
 export default function PlanetCard ({ planet }) {

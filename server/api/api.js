@@ -25,6 +25,10 @@ router.get('/', async (req, res) => {
 })
 
 router.put('/', async (req, res) => {
+  res.status(501).json({ error: true, message: 'Not Yet Implemented' })
+  return
+
+  // eslint-disable-next-line no-unreachable
   validateNewPlanet(req.body, async (err, validPlanet, messages) => {
     if (err) {
       res.status(err.status).json({ error: true, message: err.message })

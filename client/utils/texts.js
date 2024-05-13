@@ -20,59 +20,40 @@ export function generateDescriptorText (descriptor, isMoon) {
   return `${descriptor} ${isMoon ? 'Moon' : 'Planet'}`
 }
 
-const border = 2
-const borderRadius = border + 'px'
+export const specialResources = [
+  { label: 'Cactus Flesh', value: 'Cactus Flesh' },
+  { label: 'Frost Crystal', value: 'Frost Crystal' },
+  { label: 'Fungal Mold', value: 'Fungal Mold' },
+  { label: 'Gamma Root', value: 'Gamma Root' },
+  { label: 'Solanium', value: 'Solanium' },
+  { label: 'Star Bulb', value: 'Star Bulb' }
+]
 
-/**
- *
- * @param {boolean} isExtreme
- * @param {boolean} isInfested
- * @param {boolean} isExotic
- * @param {boolean} useDefault whether to use the default border style (true by default)
- * @returns {object} the border style object
- */
-export function generateBiomeBorder (
-  isExtreme,
-  isInfested,
-  isExotic,
-  useDefault = true
-) {
-  if (isExtreme && isInfested) {
-    return {
-      border,
-      borderColor: 'linear-gradient(to right, lightcoral 50%, lightgreen 50%)',
-      borderRadius
-    }
-  }
-  else if (isExtreme) {
-    return {
-      border,
-      borderColor: 'error.main',
-      borderRadius
-    }
-  }
-  else if (isInfested) {
-    return {
-      border,
-      borderColor: 'success.main',
-      borderRadius
-    }
-  }
-  else if (isExotic) {
-    return {
-      border,
-      borderColor: 'text.secondary',
-      borderRadius
-    }
-  }
-  else if (useDefault) {
-    return {
-      border,
-      borderColor: 'black',
-      borderRadius
-    }
-  }
-  else {
-    return {}
-  }
-}
+export const stellarMetals = [
+  { label: 'Copper', value: 'Copper' },
+  { label: 'Activated Copper', value: 'Activated Copper' },
+  { label: 'Cadmium', value: 'Cadmium' },
+  { label: 'Activated Cadmium', value: 'Activated Cadmium' },
+  { label: 'Emeril', value: 'Emeril' },
+  { label: 'Activated Emeril', value: 'Activated Emeril' },
+  { label: 'Indium', value: 'Indium' },
+  { label: 'Activated Indium', value: 'Activated Indium' }
+]
+
+export const otherResources = [
+  { label: 'Ammonia', value: 'Ammonia' },
+  { label: 'Dioxite', value: 'Dioxite' },
+  { label: 'Paraffinium', value: 'Paraffinium' },
+  { label: 'Phosphorus', value: 'Phosphorus' },
+  { label: 'Pyrite', value: 'Pyrite' },
+  { label: 'Uranium', value: 'Uranium' },
+  { label: 'Silver', value: 'Silver' },
+  { label: 'Gold', value: 'Gold' },
+  { label: 'Magnetized Ferrite', value: 'Magnetized Ferrite' },
+  { label: 'Sodium', value: 'Sodium' },
+  { label: 'Salt', value: 'Salt' },
+  { label: 'Cobalt', value: 'Cobalt' },
+  { label: 'Faecium', value: 'Faecium' },
+  { label: 'Rusted Metal', value: 'Rusted Metal' },
+  { label: 'Basalt', value: 'Basalt' }
+].sort((a, b) => a.label.localeCompare(b.label))

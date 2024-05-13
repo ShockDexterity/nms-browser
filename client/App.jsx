@@ -35,7 +35,12 @@ export default function App (props) {
             subtitle="Click on a planet card for more information"
           />
 
-          <Box sx={{ pb: 2, my: 2, borderBottom: 1, borderColor: 'divider' }}>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            sx={{ pb: 2, my: 2, borderBottom: 1, borderColor: 'divider' }}
+          >
             <Button variant="contained" onClick={handleAddClick}>
               Add Planet
             </Button>
