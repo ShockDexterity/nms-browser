@@ -1,3 +1,28 @@
+const specialDescriptors = [
+  'Terraforming Catastrophe',
+  'Imminent Core Detonation',
+  'Infested Paradise',
+  'Xeno-Colony',
+  'The Nest',
+  'Toxic Horror',
+  'Caustic Nightmare',
+  'Boiling Doom',
+  'Fiery Dreadworld',
+  'Radioactive Abomination',
+  'Icy Abhorrence',
+  'Frozen Hell',
+  'Infected Dustbowl',
+  'Terrorsphere',
+  'Planetary Anomaly',
+  'Stellar Corruption Detected',
+  'Vermillion Globe',
+  'Vile Anomaly',
+  'Harsh Blue Globe',
+  'Toxic Anomaly',
+  'Deathly Green Anomaly',
+  'Frozen Anomaly'
+]
+
 /**
  *
  * @param {string} descriptor the planet descriptor
@@ -5,56 +30,52 @@
  * @returns {string} the descriptor string of a planetary body
  */
 export function generateDescriptorText (descriptor, isMoon) {
-  const specialDescriptors = {
-    'of Light': `${isMoon ? 'Moon' : 'Planet'} of Light`,
-    'Planetary Anomaly': 'Planetary Anomaly',
-    'Imminent Core Detonation': 'Imminent Core Detonation',
-    'Terraforming Catastrophe': 'Terraforming Catastrophe',
-    Terrorsphere: 'Terrorsphere'
+  if (descriptor === 'of Light') {
+    return isMoon ? 'Moon of Light' : 'Planet of Light'
   }
 
-  if (descriptor in specialDescriptors) {
-    return specialDescriptors[descriptor]
+  if (specialDescriptors.find((d) => d === descriptor)) {
+    return descriptor
   }
 
   return `${descriptor} ${isMoon ? 'Moon' : 'Planet'}`
 }
 
 export const specialResources = [
-  { label: 'Cactus Flesh', value: 'Cactus Flesh' },
-  { label: 'Frost Crystal', value: 'Frost Crystal' },
-  { label: 'Fungal Mold', value: 'Fungal Mold' },
-  { label: 'Gamma Root', value: 'Gamma Root' },
-  { label: 'Solanium', value: 'Solanium' },
-  { label: 'Star Bulb', value: 'Star Bulb' }
+  'Cactus Flesh',
+  'Frost Crystal',
+  'Fungal Mold',
+  'Gamma Root',
+  'Solanium',
+  'Star Bulb'
 ]
 
 export const stellarMetals = [
-  { label: 'Copper', value: 'Copper' },
-  { label: 'Activated Copper', value: 'Activated Copper' },
-  { label: 'Cadmium', value: 'Cadmium' },
-  { label: 'Activated Cadmium', value: 'Activated Cadmium' },
-  { label: 'Emeril', value: 'Emeril' },
-  { label: 'Activated Emeril', value: 'Activated Emeril' },
-  { label: 'Indium', value: 'Indium' },
-  { label: 'Activated Indium', value: 'Activated Indium' }
+  'Copper',
+  'Activated Copper',
+  'Cadmium',
+  'Activated Cadmium',
+  'Emeril',
+  'Activated Emeril',
+  'Indium',
+  'Activated Indium'
 ]
 
 export const otherResources = [
-  { label: 'Ammonia', value: 'Ammonia' },
-  { label: 'Dioxite', value: 'Dioxite' },
-  { label: 'Paraffinium', value: 'Paraffinium' },
-  { label: 'Phosphorus', value: 'Phosphorus' },
-  { label: 'Pyrite', value: 'Pyrite' },
-  { label: 'Uranium', value: 'Uranium' },
-  { label: 'Silver', value: 'Silver' },
-  { label: 'Gold', value: 'Gold' },
-  { label: 'Magnetized Ferrite', value: 'Magnetized Ferrite' },
-  { label: 'Sodium', value: 'Sodium' },
-  { label: 'Salt', value: 'Salt' },
-  { label: 'Cobalt', value: 'Cobalt' },
-  { label: 'Faecium', value: 'Faecium' },
-  { label: 'Mordite', value: 'Mordite' },
-  { label: 'Rusted Metal', value: 'Rusted Metal' },
-  { label: 'Basalt', value: 'Basalt' }
-].sort((a, b) => a.label.localeCompare(b.label))
+  'Ammonia',
+  'Basalt',
+  'Cobalt',
+  'Dioxite',
+  'Faecium',
+  'Gold',
+  'Magnetized Ferrite',
+  'Mordite',
+  'Paraffinium',
+  'Phosphorus',
+  'Pyrite',
+  'Rusted Metal',
+  'Salt',
+  'Silver',
+  'Sodium',
+  'Uranium'
+]
