@@ -54,6 +54,7 @@ export const otherResources = [
   { label: 'Salt', value: 'Salt' },
   { label: 'Cobalt', value: 'Cobalt' },
   { label: 'Faecium', value: 'Faecium' },
+  { label: 'Mordite', value: 'Mordite' },
   { label: 'Rusted Metal', value: 'Rusted Metal' },
   { label: 'Basalt', value: 'Basalt' }
 ].sort((a, b) => a.label.localeCompare(b.label))
