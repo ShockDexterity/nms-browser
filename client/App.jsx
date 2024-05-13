@@ -15,6 +15,7 @@ import {
 } from './state/PlanetContext.js'
 import DetailsDialog from './components/DetailsDialog.jsx'
 import AddDialog from './components/AddDialog.jsx'
+import AlertSnackbar from './components/AlertSnackbar.jsx'
 
 export default function App (props) {
   const [reducer, dispatch] = React.useReducer(planetReducer, REDUCER_INIT)
@@ -27,6 +28,7 @@ export default function App (props) {
   return (
     <PlanetContext.Provider value={reducer}>
       <DispatchContext.Provider value={dispatch}>
+        {/* Main Container */}
         <Container>
           <Header
             title="No Man's Sky Planet Browser"
@@ -40,10 +42,14 @@ export default function App (props) {
           </Box>
 
           <PlanetGrid />
-
-          <AddDialog />
-          <DetailsDialog />
         </Container>
+
+        {/* Dialogs */}
+        <AddDialog />
+        <DetailsDialog />
+
+        {/* Snackbar */}
+        <AlertSnackbar />
       </DispatchContext.Provider>
     </PlanetContext.Provider>
   )

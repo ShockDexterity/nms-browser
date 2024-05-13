@@ -1,16 +1,14 @@
 import React from 'react'
 
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  TextField,
-  Typography
-} from '@mui/material'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Divider from '@mui/material/Divider'
+import TextField from '@mui/material/TextField'
+import Typography from '@mui/material/Typography'
 
 import { DispatchContext, PlanetContext } from '../state/PlanetContext.js'
 import { addPlanet } from '../utils/fetcher.js'
@@ -32,6 +30,7 @@ export default function AddDialog (props) {
 
     // Send the form data to the server
     console.log('form data:', formData)
+
     // try {
     //   const response = await addPlanet(formData)
 

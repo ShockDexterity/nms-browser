@@ -8,6 +8,8 @@ export const REDUCER_INIT = {
   title: '',
   showDialog: '',
   showSnackbar: false,
+  snackbarSeverity: 'warning',
+  snackbarMessage: 'Snackbar message not set',
   planet: null,
   refresh: true
 }
@@ -27,10 +29,10 @@ export function planetReducer (state, action) {
       return { ...state, showSnackbar: false }
 
     case 'SET_SNACKBAR_SEVERITY':
-      return { ...state, snackbar_severity: action.severity }
+      return { ...state, snackbarSeverity: action.severity }
 
     case 'SET_SNACKBAR_MESSAGE':
-      return { ...state, snackbar_message: action.message }
+      return { ...state, snackbarMessage: action.message }
 
     case 'DETAILS':
       return {

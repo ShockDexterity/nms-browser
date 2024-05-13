@@ -21,7 +21,6 @@ export default function PlanetCard ({ planet }) {
 
   const handleDetailsClick = (event) => {
     event.preventDefault()
-    console.log('details clicked')
     dispatch({ type: 'SET_PLANET', planet })
     dispatch({ type: 'DETAILS', title: planet.name })
   }
