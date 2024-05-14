@@ -23,6 +23,7 @@ import {
   stellarMetals
 } from '../utils/texts.js'
 import { addPlanet } from '../utils/fetcher.js'
+import { biomeDescriptors } from '../utils/descriptors.js'
 
 export default function AddDialog (props) {
   const { showDialog, dialogTitle } = React.useContext(PlanetContext)
@@ -98,7 +99,7 @@ export default function AddDialog (props) {
           <MyAutocomplete
             label="Planet Descriptor"
             name="descriptor"
-            options={specialResources}
+            options={biomeDescriptors}
           />
         </FormBox>
 

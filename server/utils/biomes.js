@@ -156,6 +156,18 @@ export const biomeDescriptors = {
   'Xeno-Colony': 'Infested Lush'
 }
 
-export const exoticBiomes = []
-
-export const infestedBiomes = []
+export const exoticBiomes = [
+  'Beams',
+  'Bone Spire',
+  'Bubble',
+  'Chromatic',
+  'Contour',
+  'Fract Cube',
+  'Glitch',
+  'Hexagon',
+  'Hydro Garden',
+  'Irri Shells',
+  'M Structure',
+  'Shards',
+  'Wire Cell'
+]

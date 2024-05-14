@@ -4,7 +4,7 @@ import {
   specialResources,
   stellarMetals
 } from '../data/planet_info.js'
-import { biomeDescriptors, exoticBiomes, infestedBiomes } from './biomes.js'
+import { biomeDescriptors, exoticBiomes } from './biomes.js'
 
 export function validateNewPlanet (submission, callback) {
   if (!submission) {
@@ -193,8 +193,8 @@ export function validateNewPlanet (submission, callback) {
   }
 
   cleanedPlanet.exotic = exoticBiomes.includes(cleanedPlanet.biome)
-  cleanedPlanet.extreme = submission.r1.contains('Activated')
-  cleanedPlanet.infested = infestedBiomes.includes(cleanedPlanet.biome)
+  cleanedPlanet.extreme = submission.r1.startsWith('Activated')
+  cleanedPlanet.infested = cleanedPlanet.biome.startsWith('Infested')
 
   callback(null, cleanedPlanet, messages)
 }
