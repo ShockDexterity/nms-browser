@@ -42,6 +42,7 @@ export function generateDescriptorText (descriptor, isMoon) {
 }
 
 export const specialResources = [
+  'None',
   'Cactus Flesh',
   'Frost Crystal',
   'Fungal Mold',

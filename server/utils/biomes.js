@@ -1,4 +1,4 @@
-export const descriptors = {
+export const biomeDescriptors = {
   '[REDACTED]': 'Glitch',
   Acidic: 'Toxic',
   Acrid: 'Toxic',
@@ -155,3 +155,7 @@ export const descriptors = {
   'Worm-ridden': 'Infested Lush',
   'Xeno-Colony': 'Infested Lush'
 }
+
+export const exoticBiomes = []
+
+export const infestedBiomes = []

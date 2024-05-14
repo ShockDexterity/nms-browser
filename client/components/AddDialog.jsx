@@ -113,6 +113,7 @@ export default function AddDialog (props) {
             label="Special Resource"
             name="special"
             options={specialResources}
+            defaultValue="None"
           />
           <MyAutocomplete
             label="Resource 1"
