@@ -1,7 +1,7 @@
 import Express, { Router } from 'express'
 
 import * as DB from '../mongodb/mongodb.js'
-import { validateNewPlanet } from '../utils/validators.js'
+import { validateEditedPlanet, validateNewPlanet } from '../utils/validators.js'
 
 const dbHandle = DB.connect('NMSP')
 const planetsCollection = dbHandle.collection('planets')
@@ -25,8 +25,8 @@ router.get('/', async (req, res) => {
 })
 
 router.put('/', async (req, res) => {
-  res.status(501).json({ error: true, message: 'Not Yet Implemented' })
-  return
+  // res.status(501).json({ error: true, message: 'Not Yet Implemented' })
+  // return
 
   // eslint-disable-next-line no-unreachable
   validateNewPlanet(req.body, async (err, validPlanet, messages) => {
@@ -60,22 +60,22 @@ router.put('/', async (req, res) => {
 
 router.put('/edit', async (req, res) => {
   console.log('validating')
-  validateNewPlanet(req.body, async (err, validPlanet, messages) => {
+  validateEditedPlanet(req.body, async (err, validInfo, messages) => {
     if (err) {
       console.log('error')
       res.status(err.status).json({ error: true, message: err.message })
       return
     }
 
-    Object.keys(validPlanet).forEach((key) => {
-      if (validPlanet[key] === null || validPlanet[key] === undefined) {
-        delete validPlanet[key]
+    Object.keys(validInfo).forEach((key) => {
+      if (validInfo[key] === null || validInfo[key] === undefined) {
+        delete validInfo[key]
       }
     })
 
     const planetToEdit = await DB.getPlanetByID(
       planetsCollection,
-      validPlanet._id
+      validInfo._id
     )
     if (!planetToEdit) {
       res.status(400).json({ error: true, message: 'Planet does not exist' })
@@ -83,10 +83,10 @@ router.put('/edit', async (req, res) => {
     }
 
     try {
-      await DB.updatePlanet(planetsCollection, planetToEdit._id, validPlanet)
+      await DB.updatePlanet(planetsCollection, planetToEdit._id, validInfo)
       res.status(200).json({
         success: true,
-        message: `${validPlanet.name} updated`,
+        message: `${validInfo.name} updated`,
         additional: messages
       })
     }

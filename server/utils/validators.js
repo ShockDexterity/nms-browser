@@ -198,3 +198,22 @@ export function validateNewPlanet (submission, callback) {
 
   callback(null, cleanedPlanet, messages)
 }
+
+export function validateEditedPlanet (newInformation, callback) {
+  if (!newInformation) {
+    callback({ status: 400, message: 'No planet provided' })
+    return
+  }
+  if (typeof newInformation !== 'object' || Array.isArray(newInformation)) {
+    callback({ status: 400, message: 'Invalid planet' })
+    return
+  }
+
+  const cleanedPlanet = {}
+  const messages = []
+
+  // Fields from the form that should be validated
+  // _id, name, system, descriptor, biome, moon, special, r1, r2, r3, sentinels
+
+  callback(null, cleanedPlanet, messages)
+}

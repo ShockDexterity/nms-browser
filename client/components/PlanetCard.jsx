@@ -38,10 +38,24 @@ export default function PlanetCard ({ planet }) {
       try {
         const response = await deletePlanet(planet._id)
         if (response.error) {
-          window.alert(response.error)
-          return
+          dispatch({ type: 'HIDE_SNACKBAR' })
+          dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'error' })
+          dispatch({
+            type: 'SET_SNACKBAR_MESSAGE',
+            message: response.message
+          })
+          dispatch({ type: 'SHOW_SNACKBAR' })
         }
-        dispatch({ type: 'REFRESH' })
+        else {
+          dispatch({ type: 'REFRESH' })
+          dispatch({ type: 'HIDE_SNACKBAR' })
+          dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
+          dispatch({
+            type: 'SET_SNACKBAR_MESSAGE',
+            message: `Deleted ${planet.name}`
+          })
+          dispatch({ type: 'SHOW_SNACKBAR' })
+        }
       }
       catch (error) {
         window.alert(`error deleting ${planet.name}`)
@@ -72,25 +86,11 @@ export default function PlanetCard ({ planet }) {
         </CardActionArea>
 
         <CardActions>
-          <Button
-            size="small"
-            color="warning"
-            onClick={(e) => {
-              e.preventDefault()
-              window.alert('Edit not implemented')
-            }}
-          >
+          <Button size="small" color="warning" onClick={handleEditClick}>
             Edit
           </Button>
 
-          <Button
-            size="small"
-            color="error"
-            onClick={(e) => {
-              e.preventDefault()
-              window.alert('Delete not implemented')
-            }}
-          >
+          <Button size="small" color="error" onClick={handleDeleteClick}>
             Delete
           </Button>
         </CardActions>
