@@ -4,8 +4,12 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 
-import PlanetGrid from './components/PlanetGrid.jsx'
+import AddDialog from './components/AddDialog.jsx'
+import AlertSnackbar from './components/AlertSnackbar.jsx'
+import DetailsDialog from './components/DetailsDialog.jsx'
+import EditDialog from './components/EditDialog.jsx'
 import Header from './components/Header.jsx'
+import PlanetGrid from './components/PlanetGrid.jsx'
 
 import {
   DispatchContext,
@@ -13,9 +17,6 @@ import {
   PlanetContext,
   planetReducer
 } from './state/PlanetContext.js'
-import DetailsDialog from './components/DetailsDialog.jsx'
-import AddDialog from './components/AddDialog.jsx'
-import AlertSnackbar from './components/AlertSnackbar.jsx'
 
 export default function App (props) {
   const [reducer, dispatch] = React.useReducer(planetReducer, REDUCER_INIT)
@@ -52,6 +53,7 @@ export default function App (props) {
         {/* Dialogs */}
         <AddDialog />
         <DetailsDialog />
+        <EditDialog />
 
         {/* Snackbar */}
         <AlertSnackbar />

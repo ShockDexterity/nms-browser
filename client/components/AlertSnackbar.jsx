@@ -19,7 +19,7 @@ export default function AlertSnackbar (props) {
   }
 
   return (
-    <Snackbar open={showSnackbar} autoHideDuration={3000} onClose={handleClose}>
+    <Snackbar open={showSnackbar} autoHideDuration={5000} onClose={handleClose}>
       <Alert
         onClose={handleClose}
         severity={snackbarSeverity}

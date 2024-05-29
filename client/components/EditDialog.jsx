@@ -22,11 +22,11 @@ import {
   specialResources,
   stellarMetals
 } from '../utils/texts.js'
-import { addPlanet } from '../utils/fetcher.js'
-import { biomeDescriptors } from '../utils/descriptors.js'
+import { updatePlanet } from '../utils/fetcher.js'
+import { biomeDescriptors, biomes } from '../utils/descriptors.js'
 
-export default function AddDialog (props) {
-  const { showDialog, dialogTitle } = React.useContext(PlanetContext)
+export default function EditDialog (props) {
+  const { showDialog, dialogTitle, planet } = React.useContext(PlanetContext)
   const dispatch = React.useContext(DispatchContext)
 
   const sLabelID = React.useId()
@@ -41,10 +41,12 @@ export default function AddDialog (props) {
     const form = event.target
     const rawFormData = new FormData(form)
     const formData = Object.fromEntries(rawFormData.entries())
+    formData._id = planet._id
 
     // Send the form data to the server
     try {
-      const response = await addPlanet(formData)
+      console.log('formData:', formData)
+      const response = await updatePlanet(formData)
 
       if (response.error) {
         dispatch({ type: 'HIDE_SNACKBAR' })
@@ -59,10 +61,11 @@ export default function AddDialog (props) {
         dispatch({ type: 'REFRESH' })
         dispatch({ type: 'HIDE_SNACKBAR' })
         dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
-        dispatch({ type: 'SET_SNACKBAR_MESSAGE', message: 'Planet added' })
+        dispatch({
+          type: 'SET_SNACKBAR_MESSAGE',
+          message: 'Planet successfully edited'
+        })
         dispatch({ type: 'SHOW_SNACKBAR' })
-
-        form.reset()
 
         handleClose()
       }
@@ -76,7 +79,7 @@ export default function AddDialog (props) {
 
   return (
     <Dialog
-      open={showDialog === 'add'}
+      open={showDialog === 'edit'}
       onClose={handleClose}
       fullWidth={true}
       maxWidth="sm"
@@ -89,8 +92,20 @@ export default function AddDialog (props) {
 
       <DialogContent>
         <FormBox>
-          <TextField label="Planet Name" name="name" size="small" required />
-          <TextField label="System Name" name="system" size="small" required />
+          <TextField
+            label="Planet Name"
+            name="name"
+            size="small"
+            defaultValue={planet?.name ?? ''}
+            required
+          />
+          <TextField
+            label="System Name"
+            name="system"
+            size="small"
+            defaultValue={planet?.system ?? ''}
+            required
+          />
         </FormBox>
 
         <FormBox>
@@ -98,11 +113,23 @@ export default function AddDialog (props) {
             label="Planet Descriptor"
             name="descriptor"
             options={biomeDescriptors}
+            defaultValue={planet?.descriptor ?? ''}
+          />
+          <MyAutocomplete
+            label="Biome"
+            name="biome"
+            options={biomes}
+            defaultValue={planet?.biome ?? ''}
           />
         </FormBox>
 
         <FormBox>
-          <FormControlLabel label="Moon" control={<Checkbox name="moon" />} />
+          <FormControlLabel
+            label="Moon"
+            control={
+              <Checkbox name="moon" defaultChecked={planet?.moon ?? false} />
+            }
+          />
         </FormBox>
 
         <Divider sx={{ my: 0.5 }} />
@@ -112,12 +139,13 @@ export default function AddDialog (props) {
             label="Special Resource"
             name="special"
             options={specialResources}
-            defaultValue="None"
+            defaultValue={planet?.special ?? 'None'}
           />
           <MyAutocomplete
             label="Resource 1"
             name="r1"
             options={stellarMetals}
+            defaultValue={planet?.resources?.r1 ?? ''}
           />
         </FormBox>
 
@@ -126,11 +154,13 @@ export default function AddDialog (props) {
             label="Resource 2"
             name="r2"
             options={otherResources}
+            defaultValue={planet?.resources?.r2 ?? ''}
           />
           <MyAutocomplete
             label="Resource 3"
             name="r3"
             options={otherResources}
+            defaultValue={planet?.resources?.r3 ?? ''}
           />
         </FormBox>
 
@@ -142,7 +172,7 @@ export default function AddDialog (props) {
         <FormBox>
           <RadioGroup
             row
-            defaultValue="low"
+            defaultValue={planet?.sentinels ?? 'low'}
             name="sentinels"
             aria-labelledby={sLabelID}
           >

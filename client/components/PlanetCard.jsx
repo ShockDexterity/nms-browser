@@ -29,12 +29,12 @@ export default function PlanetCard ({ planet }) {
   const handleEditClick = (event) => {
     event.preventDefault()
     dispatch({ type: 'SET_PLANET', planet })
-    dispatch({ type: 'EDIT', title: `Edit ${planet.name}` })
+    dispatch({ type: 'EDIT', title: `Edit Planet "${planet.name}"` })
   }
 
   const handleDeleteClick = async (event) => {
     event.preventDefault()
-    if (window.confirm(`Are you sure you want to delete ${planet.name}?`)) {
+    if (window.confirm(`Are you sure you want to delete "${planet.name}"?`)) {
       try {
         const response = await deletePlanet(planet._id)
         if (response.error) {

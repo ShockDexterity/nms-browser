@@ -11,7 +11,6 @@ export default function FormBox ({ children }) {
       justifyContent="center"
       sx={{
         '& .MuiTextField-root': { m: 1, width: '26ch' }
-        // '& .MuiAutocomplete-root': { m: 1, width: '28ch' }
       }}
     >
       {children}

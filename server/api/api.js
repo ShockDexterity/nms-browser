@@ -25,10 +25,6 @@ router.get('/', async (req, res) => {
 })
 
 router.put('/', async (req, res) => {
-  // res.status(501).json({ error: true, message: 'Not Yet Implemented' })
-  // return
-
-  // eslint-disable-next-line no-unreachable
   validateNewPlanet(req.body, async (err, validPlanet, messages) => {
     if (err) {
       res.status(err.status).json({ error: true, message: err.message })
@@ -62,7 +58,6 @@ router.put('/edit', async (req, res) => {
   console.log('validating')
   validateEditedPlanet(req.body, async (err, validInfo, messages) => {
     if (err) {
-      console.log('error')
       res.status(err.status).json({ error: true, message: err.message })
       return
     }
@@ -72,6 +67,8 @@ router.put('/edit', async (req, res) => {
         delete validInfo[key]
       }
     })
+
+    console.log('validInfo:', validInfo)
 
     const planetToEdit = await DB.getPlanetByID(
       planetsCollection,

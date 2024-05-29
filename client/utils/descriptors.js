@@ -174,3 +174,34 @@ export const biomeDescriptors = [
   'Worm-Ridden',
   'Xeno-Colony'
 ]
+
+export const biomes = [
+  'Barren',
+  'Beams',
+  'Bone Spire',
+  'Bubble',
+  'Chromatic',
+  'Contour',
+  'Dead',
+  'Fract Cube',
+  'Frozen',
+  'Glitch',
+  'Hexagon',
+  'Hydro Garden',
+  'Infested Barren',
+  'Infested Frozen',
+  'Infested Irradiated',
+  'Infested Lush',
+  'Infested Scorched',
+  'Infested Toxic',
+  'Irradiated',
+  'Irri Shells',
+  'Lush',
+  'M Structure',
+  'Marsh',
+  'Scorched',
+  'Shards',
+  'Toxic',
+  'Volcanic',
+  'Wire Cell'
+]
