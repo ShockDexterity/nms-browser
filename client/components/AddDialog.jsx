@@ -44,6 +44,7 @@ export default function AddDialog (props) {
 
     // Send the form data to the server
     try {
+      // console.log('formData', formData)
       const response = await addPlanet(formData)
 
       if (response.error) {

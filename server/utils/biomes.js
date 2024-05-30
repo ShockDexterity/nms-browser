@@ -193,3 +193,11 @@ export const exoticBiomes = [
   'Shards',
   'Wire Cell'
 ]
+
+export const biomeSpecials = {
+  Barren: 'Cactus Flesh',
+  Frozen: 'Frost Crystal',
+  Toxic: 'Fungal Mold',
+  Irradiated: 'Gamma Root',
+  Scorched: 'Solanium'
+}

@@ -4,7 +4,13 @@ import {
   specialResources,
   stellarMetals
 } from '../data/planet_info.js'
-import { biomeDescriptors, exoticBiomes, sharedDescriptors } from './biomes.js'
+
+import {
+  biomeDescriptors,
+  biomeSpecials,
+  exoticBiomes,
+  sharedDescriptors
+} from './biomes.js'
 
 /**
  *
@@ -25,6 +31,8 @@ export function validateNewPlanet (submission, callback) {
   const cleanedPlanet = {}
   const messages = []
 
+  console.log(submission)
+
   // Fields from the form that should be validated
   // name, system, descriptor, moon, special, r1, r2, r3, sentinels
   if (!submission.name) {
@@ -43,12 +51,11 @@ export function validateNewPlanet (submission, callback) {
     callback({ status: 400, message: 'Biome descriptor is required' })
     return
   }
-  if (
-    !(
-      submission.descriptor in biomeDescriptors ||
-      sharedDescriptors.includes(submission.descriptor)
-    )
+  else if (
+    !(submission.descriptor in biomeDescriptors) &&
+    !sharedDescriptors.includes(submission.descriptor)
   ) {
+    console.log('not in biomeDescriptors')
     callback({ status: 400, message: 'Invalid biome descriptor' })
     return
   }
@@ -205,6 +212,43 @@ export function validateNewPlanet (submission, callback) {
     cleanedPlanet.biome = biomeDescriptors[submission.descriptor]
   }
 
+  if (cleanedPlanet.biome in biomeSpecials) {
+    if (submission.special !== biomeSpecials[cleanedPlanet.biome]) {
+      callback({
+        status: 400,
+        message: 'Biome and Special Resource conflict with each other'
+      })
+      return
+    }
+  }
+  else if (cleanedPlanet.biome === 'Lush') {
+    if (submission.special !== 'Star Bulb') {
+      callback({
+        status: 400,
+        message: 'Biome and Special Resource conflict with each other'
+      })
+      return
+    }
+  }
+  else if (cleanedPlanet.biome === 'Marsh') {
+    if (submission.special !== 'Star Bulb' && submission.special !== 'None') {
+      callback({
+        status: 400,
+        message: 'Biome and Special Resource conflict with each other'
+      })
+      return
+    }
+  }
+  else {
+    if (submission.special !== 'None') {
+      callback({
+        status: 400,
+        message: 'Biome and Special Resource conflict with each other'
+      })
+      return
+    }
+  }
+
   cleanedPlanet.exotic = exoticBiomes.includes(cleanedPlanet.biome)
   cleanedPlanet.extreme = submission.r1.startsWith('Activated')
   cleanedPlanet.infested = cleanedPlanet.biome.startsWith('Infested')
@@ -253,12 +297,11 @@ export function validateEditedPlanet (submission, callback) {
     callback({ status: 400, message: 'Biome descriptor is required' })
     return
   }
-  if (
-    !(
-      submission.descriptor in biomeDescriptors ||
-      sharedDescriptors.includes(submission.descriptor)
-    )
+  else if (
+    !(submission.descriptor in biomeDescriptors) &&
+    !sharedDescriptors.includes(submission.descriptor)
   ) {
+    console.log('not in biomeDescriptors')
     callback({ status: 400, message: 'Invalid biome descriptor' })
     return
   }
@@ -329,7 +372,6 @@ export function validateEditedPlanet (submission, callback) {
   cleanedPlanet.sentinels = submission.sentinels
 
   // Determine remaining fields based on the form data
-
   if (
     submission.descriptor === 'Abandoned' ||
     submission.descriptor === 'Desolate'
@@ -439,6 +481,43 @@ export function validateEditedPlanet (submission, callback) {
   else {
     cleanedPlanet.biome = biomeDescriptors[submission.descriptor]
     messages.push('Biome and descriptor did not match, auto-corrected')
+  }
+
+  if (cleanedPlanet.biome in biomeSpecials) {
+    if (submission.special !== biomeSpecials[cleanedPlanet.biome]) {
+      callback({
+        status: 400,
+        message: 'Biome and Special Resource conflict with each other'
+      })
+      return
+    }
+  }
+  else if (cleanedPlanet.biome === 'Lush') {
+    if (submission.special !== 'Star Bulb') {
+      callback({
+        status: 400,
+        message: 'Biome and Special Resource conflict with each other'
+      })
+      return
+    }
+  }
+  else if (cleanedPlanet.biome === 'Marsh') {
+    if (submission.special !== 'Star Bulb' && submission.special !== 'None') {
+      callback({
+        status: 400,
+        message: 'Biome and Special Resource conflict with each other'
+      })
+      return
+    }
+  }
+  else {
+    if (submission.special !== 'None') {
+      callback({
+        status: 400,
+        message: 'Biome and Special Resource conflict with each other'
+      })
+      return
+    }
   }
 
   cleanedPlanet.exotic = exoticBiomes.includes(cleanedPlanet.biome)
