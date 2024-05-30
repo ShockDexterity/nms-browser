@@ -52,7 +52,7 @@ export default function PlanetCard ({ planet }) {
           dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
           dispatch({
             type: 'SET_SNACKBAR_MESSAGE',
-            message: `Deleted ${planet.name}`
+            message: `Deleted Planet "${planet.name}"`
           })
           dispatch({ type: 'SHOW_SNACKBAR' })
         }

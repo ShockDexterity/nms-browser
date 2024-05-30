@@ -31,8 +31,6 @@ export function validateNewPlanet (submission, callback) {
   const cleanedPlanet = {}
   const messages = []
 
-  console.log(submission)
-
   // Fields from the form that should be validated
   // name, system, descriptor, moon, special, r1, r2, r3, sentinels
   if (!submission.name) {
@@ -55,7 +53,6 @@ export function validateNewPlanet (submission, callback) {
     !(submission.descriptor in biomeDescriptors) &&
     !sharedDescriptors.includes(submission.descriptor)
   ) {
-    console.log('not in biomeDescriptors')
     callback({ status: 400, message: 'Invalid biome descriptor' })
     return
   }
@@ -190,8 +187,8 @@ export function validateNewPlanet (submission, callback) {
     }
     else if (submission.special === 'Star Bulb') {
       if (
-        Object.values(submission.resources).includes('Faecium') ||
-        Object.values(submission.resources).includes('Mordite')
+        Object.values(cleanedPlanet.resources).includes('Faecium') ||
+        Object.values(cleanedPlanet.resources).includes('Mordite')
       ) {
         cleanedPlanet.biome = 'Marsh'
       }
@@ -214,6 +211,15 @@ export function validateNewPlanet (submission, callback) {
 
   if (cleanedPlanet.biome in biomeSpecials) {
     if (submission.special !== biomeSpecials[cleanedPlanet.biome]) {
+      callback({
+        status: 400,
+        message: 'Biome and Special Resource conflict with each other'
+      })
+      return
+    }
+  }
+  else if (cleanedPlanet.biome === 'Lush / Marsh') {
+    if (submission.special !== 'Star Bulb') {
       callback({
         status: 400,
         message: 'Biome and Special Resource conflict with each other'
@@ -301,7 +307,6 @@ export function validateEditedPlanet (submission, callback) {
     !(submission.descriptor in biomeDescriptors) &&
     !sharedDescriptors.includes(submission.descriptor)
   ) {
-    console.log('not in biomeDescriptors')
     callback({ status: 400, message: 'Invalid biome descriptor' })
     return
   }
@@ -456,8 +461,8 @@ export function validateEditedPlanet (submission, callback) {
     }
     else if (submission.special === 'Star Bulb') {
       if (
-        (Object.values(submission.resources).includes('Faecium') ||
-          Object.values(submission.resources).includes('Mordite')) &&
+        (Object.values(cleanedPlanet.resources).includes('Faecium') ||
+          Object.values(cleanedPlanet.resources).includes('Mordite')) &&
         submission.biome === 'Marsh'
       ) {
         cleanedPlanet.biome = 'Marsh'

@@ -56,6 +56,20 @@ export default function AddDialog (props) {
         })
         dispatch({ type: 'SHOW_SNACKBAR' })
       }
+      else if (response?.additional.length > 0) {
+        dispatch({ type: 'REFRESH' })
+        dispatch({ type: 'HIDE_SNACKBAR' })
+        dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
+        dispatch({
+          type: 'SET_SNACKBAR_MESSAGE',
+          message: response.additional.join('\n')
+        })
+        dispatch({ type: 'SHOW_SNACKBAR' })
+
+        form.reset()
+
+        handleClose()
+      }
       else {
         dispatch({ type: 'REFRESH' })
         dispatch({ type: 'HIDE_SNACKBAR' })
