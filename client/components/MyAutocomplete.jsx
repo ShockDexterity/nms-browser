@@ -10,7 +10,7 @@ export default function MyAutocomplete ({
   options,
   defaultValue = null
 }) {
-  if (defaultValue) {
+  if (defaultValue && !defaultValue.includes('/')) {
     return (
       <Autocomplete
         disablePortal
