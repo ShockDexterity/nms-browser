@@ -9,6 +9,7 @@ import {
   biomeDescriptors,
   biomeSpecials,
   exoticBiomes,
+  infestedSpecials,
   sharedDescriptors
 } from './biomes.js'
 
@@ -18,241 +19,78 @@ import {
  * @param {function} callback the function to call after validation
  * @returns {void}
  */
-export function validateNewPlanet (submission, callback) {
-  if (!submission) {
-    callback({ status: 400, message: 'No planet provided' })
-    return
+export async function validateNewPlanet (submission, callback) {
+  try {
+    await informationPromise(checkShape, submission, { checkID: false })
   }
-  if (typeof submission !== 'object' || Array.isArray(submission)) {
-    callback({ status: 400, message: 'Invalid planet' })
+  catch (err) {
+    callback(err)
     return
   }
 
   const cleanedPlanet = {}
   const messages = []
 
-  // Fields from the form that should be validated
-  // name, system, descriptor, moon, special, r1, r2, r3, sentinels
-  if (!submission.name) {
-    callback({ status: 400, message: 'Planet name is required' })
+  try {
+    await informationPromise(checkBasicInfo, submission)
+  }
+  catch (err) {
+    callback(err)
     return
   }
   cleanedPlanet.name = submission.name
-
-  if (!submission.system) {
-    callback({ status: 400, message: 'System name is required' })
-    return
-  }
   cleanedPlanet.system = submission.system
-
-  if (!submission.descriptor) {
-    callback({ status: 400, message: 'Biome descriptor is required' })
-    return
-  }
-  else if (
-    !(submission.descriptor in biomeDescriptors) &&
-    !sharedDescriptors.includes(submission.descriptor)
-  ) {
-    callback({ status: 400, message: 'Invalid biome descriptor' })
-    return
-  }
   cleanedPlanet.descriptor = submission.descriptor
-
+  cleanedPlanet.sentinels = submission.sentinels
   cleanedPlanet.moon = !!submission.moon
 
-  if (!submission.special) {
-    callback({ status: 400, message: 'Special resource is required' })
-    return
+  try {
+    await informationPromise(checkResourcesGeneral, submission)
   }
-  if (!specialResources.includes(submission.special)) {
-    callback({ status: 400, message: 'Invalid special resource' })
+  catch (err) {
+    callback(err)
     return
   }
   cleanedPlanet.special = submission.special
-
-  if (!submission.r1) {
-    callback({ status: 400, message: 'Resource 1 is required' })
-    return
-  }
-  if (!stellarMetals.includes(submission.r1)) {
-    callback({ status: 400, message: 'Invalid resource 1' })
-    return
-  }
-
-  if (!submission.r2) {
-    callback({ status: 400, message: 'Resource 2 is required' })
-    return
-  }
-  if (!otherResources.includes(submission.r2)) {
-    callback({ status: 400, message: 'Invalid resource 2' })
-    return
-  }
-
-  if (!submission.r3) {
-    callback({ status: 400, message: 'Resource 3 is required' })
-    return
-  }
-  if (!otherResources.includes(submission.r3)) {
-    callback({ status: 400, message: 'Invalid resource 3' })
-    return
-  }
-
-  if (
-    submission.r1 === submission.r2 ||
-    submission.r1 === submission.r3 ||
-    submission.r2 === submission.r3
-  ) {
-    callback({ status: 400, message: 'Resources must be unique' })
-    return
-  }
-
   cleanedPlanet.resources = {
     r1: submission.r1,
     r2: submission.r2,
     r3: submission.r3
   }
 
-  if (!submission.sentinels) {
-    callback({ status: 400, message: 'Sentinel level is required' })
+  try {
+    const biomeResult = await informationPromise(checkBiomeNew, submission)
+
+    if (!biomeResult) {
+      callback({
+        status: 500,
+        message: 'Biome could not be determined'
+      })
+      return
+    }
+
+    if (Array.isArray(biomeResult)) {
+      const [biome, message] = biomeResult
+      cleanedPlanet.biome = biome
+      messages.push(message)
+    }
+    else {
+      cleanedPlanet.biome = biomeResult
+    }
+  }
+  catch (err) {
+    callback(err)
     return
   }
-  if (!sentinelLevels.includes(submission.sentinels)) {
-    callback({ status: 400, message: 'Invalid sentinel level' })
+
+  try {
+    await informationPromise(checkBiomeSpecial, submission, {
+      biome: cleanedPlanet.biome
+    })
+  }
+  catch (err) {
+    callback(err)
     return
-  }
-  cleanedPlanet.sentinels = submission.sentinels
-
-  // Determine remaining fields based on the form data
-
-  if (
-    submission.descriptor === 'Abandoned' ||
-    submission.descriptor === 'Desolate'
-  ) {
-    if (submission.special === 'None') {
-      cleanedPlanet.biome = 'Dead'
-    }
-    else if (submission.special === 'Cactus Flesh') {
-      cleanedPlanet.biome = 'Barren'
-    }
-    else {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else if (submission.descriptor === 'Corrupted') {
-    if (submission.special === 'None') {
-      cleanedPlanet.biome = 'Glitch'
-    }
-    else if (submission.special === 'Solanium') {
-      cleanedPlanet.biome = 'Infested Scorched'
-    }
-    else {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else if (submission.descriptor === 'Infested') {
-    if (submission.special === 'Cactus Flesh') {
-      cleanedPlanet.biome = 'Infested Barren'
-    }
-    else if (submission.special === 'Frost Crystal') {
-      cleanedPlanet.biome = 'Infested Frozen'
-    }
-    else if (submission.special === 'Gamma Root') {
-      cleanedPlanet.biome = 'Infested Irradiated'
-    }
-    else if (submission.special === 'Solanium') {
-      cleanedPlanet.biome = 'Infested Scorched'
-    }
-    else if (submission.special === 'Fungal Mold') {
-      cleanedPlanet.biome = 'Infested Toxic'
-    }
-    else {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else if (submission.descriptor === 'Tropical') {
-    if (submission.special === 'None') {
-      cleanedPlanet.biome = 'Marsh'
-    }
-    else if (submission.special === 'Star Bulb') {
-      if (
-        Object.values(cleanedPlanet.resources).includes('Faecium') ||
-        Object.values(cleanedPlanet.resources).includes('Mordite')
-      ) {
-        cleanedPlanet.biome = 'Marsh'
-      }
-      else {
-        cleanedPlanet.biome = 'Lush / Marsh'
-        messages.push('Cannot determine if planet is Lush or Marsh.')
-      }
-    }
-    else {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else {
-    cleanedPlanet.biome = biomeDescriptors[submission.descriptor]
-  }
-
-  if (cleanedPlanet.biome in biomeSpecials) {
-    if (submission.special !== biomeSpecials[cleanedPlanet.biome]) {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else if (cleanedPlanet.biome === 'Lush / Marsh') {
-    if (submission.special !== 'Star Bulb') {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else if (cleanedPlanet.biome === 'Lush') {
-    if (submission.special !== 'Star Bulb') {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else if (cleanedPlanet.biome === 'Marsh') {
-    if (submission.special !== 'Star Bulb' && submission.special !== 'None') {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else {
-    if (submission.special !== 'None') {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
   }
 
   cleanedPlanet.exotic = exoticBiomes.includes(cleanedPlanet.biome)
@@ -268,7 +106,92 @@ export function validateNewPlanet (submission, callback) {
  * @param {function} callback the function to call after validation
  * @returns {void}
  */
-export function validateEditedPlanet (submission, callback) {
+export async function validateEditedPlanet (submission, callback) {
+  try {
+    await informationPromise(checkShape, submission, { checkID: true })
+  }
+  catch (err) {
+    callback(err)
+    return
+  }
+
+  const cleanedPlanet = { _id: submission._id }
+  const messages = []
+
+  try {
+    await informationPromise(checkBasicInfo, submission)
+  }
+  catch (err) {
+    callback(err)
+    return
+  }
+  cleanedPlanet.name = submission.name
+  cleanedPlanet.system = submission.system
+  cleanedPlanet.descriptor = submission.descriptor
+  cleanedPlanet.sentinels = submission.sentinels
+  cleanedPlanet.moon = !!submission.moon
+
+  try {
+    await informationPromise(checkResourcesGeneral, submission)
+  }
+  catch (err) {
+    callback(err)
+    return
+  }
+  cleanedPlanet.special = submission.special
+  cleanedPlanet.resources = {
+    r1: submission.r1,
+    r2: submission.r2,
+    r3: submission.r3
+  }
+
+  try {
+    const biomeResult = await informationPromise(checkBiomeEdited, submission)
+    if (Array.isArray(biomeResult)) {
+      const [biome, message] = biomeResult
+      cleanedPlanet.biome = biome
+      messages.push(message)
+    }
+    else {
+      cleanedPlanet.biome = biomeResult
+    }
+  }
+  catch (err) {
+    callback(err)
+    return
+  }
+
+  try {
+    await informationPromise(checkBiomeSpecial, submission, {
+      biome: cleanedPlanet.biome
+    })
+  }
+  catch (err) {
+    callback(err)
+    return
+  }
+
+  cleanedPlanet.exotic = exoticBiomes.includes(cleanedPlanet.biome)
+  cleanedPlanet.extreme = submission.r1.startsWith('Activated')
+  cleanedPlanet.infested = cleanedPlanet.biome.startsWith('Infested')
+
+  callback(null, cleanedPlanet, messages)
+}
+
+function informationPromise (checker, info, extras = null) {
+  return new Promise((resolve, reject) => {
+    checker(info, extras, (err, res = null) => {
+      if (err) {
+        reject(err)
+      }
+      else {
+        resolve(res)
+      }
+    })
+  })
+}
+
+function checkShape (submission, { checkID = false }, callback) {
   if (!submission) {
     callback({ status: 400, message: 'No planet provided' })
     return
@@ -277,27 +200,24 @@ export function validateEditedPlanet (submission, callback) {
     callback({ status: 400, message: 'Invalid planet' })
     return
   }
-  if (!submission._id) {
+  if (checkID && !submission._id) {
     callback({ status: 400, message: 'No planet ID provided' })
     return
   }
 
-  const cleanedPlanet = { _id: submission._id }
-  const messages = []
+  callback(null)
+}
 
-  // Fields from the form that should be validated
-  // _id, name, system, descriptor, biome, moon, special, r1, r2, r3, sentinels
+function checkBasicInfo (submission, _, callback) {
   if (!submission.name) {
     callback({ status: 400, message: 'Planet name is required' })
     return
   }
-  cleanedPlanet.name = submission.name
 
   if (!submission.system) {
     callback({ status: 400, message: 'System name is required' })
     return
   }
-  cleanedPlanet.system = submission.system
 
   if (!submission.descriptor) {
     callback({ status: 400, message: 'Biome descriptor is required' })
@@ -310,10 +230,20 @@ export function validateEditedPlanet (submission, callback) {
     callback({ status: 400, message: 'Invalid biome descriptor' })
     return
   }
-  cleanedPlanet.descriptor = submission.descriptor
 
-  cleanedPlanet.moon = !!submission.moon
+  if (!submission.sentinels) {
+    callback({ status: 400, message: 'Sentinel level is required' })
+    return
+  }
+  if (!sentinelLevels.includes(submission.sentinels)) {
+    callback({ status: 400, message: 'Invalid sentinel level' })
+    return
+  }
 
+  callback(null)
+}
+
+function checkResourcesGeneral (submission, _, callback) {
   if (!submission.special) {
     callback({ status: 400, message: 'Special resource is required' })
     return
@@ -322,7 +252,6 @@ export function validateEditedPlanet (submission, callback) {
     callback({ status: 400, message: 'Invalid special resource' })
     return
   }
-  cleanedPlanet.special = submission.special
 
   if (!submission.r1) {
     callback({ status: 400, message: 'Resource 1 is required' })
@@ -360,136 +289,186 @@ export function validateEditedPlanet (submission, callback) {
     return
   }
 
-  cleanedPlanet.resources = {
-    r1: submission.r1,
-    r2: submission.r2,
-    r3: submission.r3
-  }
+  callback(null)
+}
 
-  if (!submission.sentinels) {
-    callback({ status: 400, message: 'Sentinel level is required' })
-    return
-  }
-  if (!sentinelLevels.includes(submission.sentinels)) {
-    callback({ status: 400, message: 'Invalid sentinel level' })
-    return
-  }
-  cleanedPlanet.sentinels = submission.sentinels
+function checkBiomeNew (submission, _, callback) {
+  switch (submission.descriptor) {
+    case 'Abandoned':
+    case 'Desolate':
+      if (submission.special === 'None') {
+        callback(null, 'Dead')
+      }
+      else if (submission.special === 'Cactus Flesh') {
+        callback(null, 'Barren')
+      }
+      else {
+        callback({
+          status: 400,
+          message: 'Biome and Special Resource conflict with each other'
+        })
+      }
+      break
 
-  // Determine remaining fields based on the form data
-  if (
-    submission.descriptor === 'Abandoned' ||
-    submission.descriptor === 'Desolate'
-  ) {
-    if (submission.special === 'None' && submission.biome === 'Dead') {
-      cleanedPlanet.biome = 'Dead'
-    }
-    else if (
-      submission.special === 'Cactus Flesh' &&
-      submission.biome === 'Barren'
-    ) {
-      cleanedPlanet.biome = 'Barren'
-    }
-    else {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
+    case 'Corrupted':
+      if (submission.special === 'None') {
+        callback(null, 'Glitch')
+      }
+      else if (submission.special === 'Solanium') {
+        callback(null, 'Infested Scorched')
+      }
+      else {
+        callback({
+          status: 400,
+          message: 'Biome and Special Resource conflict with each other'
+        })
+      }
+      break
+
+    case 'Infested':
+      if (infestedSpecials[submission.special]) {
+        callback(null, infestedSpecials[submission.special])
+      }
+      else {
+        callback({
+          status: 400,
+          message: 'Biome and Special Resource conflict with each other'
+        })
+      }
+      break
+
+    case 'Tropical':
+      if (submission.special === 'None') {
+        callback(null, 'Marsh')
+      }
+      else if (submission.special === 'Star Bulb') {
+        if (
+          submission.r2 === 'Faecium' ||
+          submission.r2 === 'Mordite' ||
+          submission.r3 === 'Faecium' ||
+          submission.r3 === 'Mordite'
+        ) {
+          callback(null, 'Marsh')
+        }
+        else {
+          callback(null, [
+            'Lush / Marsh',
+            'Cannot determine if planet is Lush or Marsh.'
+          ])
+        }
+      }
+      else {
+        callback({
+          status: 400,
+          message: 'Biome and Special Resource conflict with each other'
+        })
+      }
+      break
+
+    default:
+      callback(null, biomeDescriptors[submission.descriptor])
   }
-  else if (submission.descriptor === 'Corrupted') {
-    if (submission.special === 'None' && submission.biome === 'Glitch') {
-      cleanedPlanet.biome = 'Glitch'
-    }
-    else if (
-      submission.special === 'Solanium' &&
-      submission.biome === 'Infested Scorched'
-    ) {
-      cleanedPlanet.biome = 'Infested Scorched'
-    }
-    else {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else if (submission.descriptor === 'Infested') {
-    if (
-      submission.special === 'Cactus Flesh' &&
-      submission.biome === 'Infested Barren'
-    ) {
-      cleanedPlanet.biome = submission.biome
-    }
-    else if (
-      submission.special === 'Frost Crystal' &&
-      submission.biome === 'Infested Frozen'
-    ) {
-      cleanedPlanet.biome = submission.biome
-    }
-    else if (
-      submission.special === 'Gamma Root' &&
-      submission.biome === 'Infested Irradiated'
-    ) {
-      cleanedPlanet.biome = submission.biome
-    }
-    else if (
-      submission.special === 'Solanium' &&
-      submission.biome === 'Infested Scorched'
-    ) {
-      cleanedPlanet.biome = submission.biome
-    }
-    else if (
-      submission.special === 'Fungal Mold' &&
-      submission.biome === 'Infested Toxic'
-    ) {
-      cleanedPlanet.biome = submission.biome
-    }
-    else {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else if (submission.descriptor === 'Tropical') {
-    if (submission.special === 'None' && submission.biome === 'Marsh') {
-      cleanedPlanet.biome = 'Marsh'
-    }
-    else if (submission.special === 'Star Bulb') {
-      if (
-        (Object.values(cleanedPlanet.resources).includes('Faecium') ||
-          Object.values(cleanedPlanet.resources).includes('Mordite')) &&
-        submission.biome === 'Marsh'
+}
+
+function checkBiomeEdited (submission, _, callback) {
+  switch (submission.descriptor) {
+    case 'Abandoned':
+    case 'Desolate':
+      if (submission.special === 'None' && submission.biome === 'Dead') {
+        callback(null, 'Dead')
+      }
+      else if (
+        submission.special === 'Cactus Flesh' &&
+        submission.biome === 'Barren'
       ) {
-        cleanedPlanet.biome = 'Marsh'
+        callback(null, 'Barren')
       }
-      else if (submission.biome === 'Lush' || submission.biome === 'Marsh') {
-        cleanedPlanet.biome = submission.biome
-        messages.push('Double check if planet is Lush or Marsh')
+      else {
+        callback({
+          status: 400,
+          message: 'Biome and Special Resource conflict with each other'
+        })
       }
-    }
-    else {
-      callback({
-        status: 400,
-        message: 'Biome and Special Resource conflict with each other'
-      })
-      return
-    }
-  }
-  else if (submission.descriptor === biomeDescriptors[submission.biome]) {
-    cleanedPlanet.biome = submission.biome
-  }
-  else {
-    cleanedPlanet.biome = biomeDescriptors[submission.descriptor]
-    messages.push('Biome and descriptor did not match, auto-corrected')
-  }
+      break
 
-  if (cleanedPlanet.biome in biomeSpecials) {
-    if (submission.special !== biomeSpecials[cleanedPlanet.biome]) {
+    case 'Corrupted':
+      if (submission.special === 'None' && submission.biome === 'Glitch') {
+        callback(null, 'Glitch')
+      }
+      else if (
+        submission.special === 'Solanium' &&
+        submission.biome === 'Infested Scorched'
+      ) {
+        callback(null, 'Infested Scorched')
+      }
+      else {
+        callback({
+          status: 400,
+          message: 'Biome and Special Resource conflict with each other'
+        })
+      }
+      break
+
+    case 'Infested':
+      if (infestedSpecials[submission.special] === submission.biome) {
+        callback(null, submission.biome)
+      }
+      else {
+        callback({
+          status: 400,
+          message: 'Biome and Special Resource conflict with each other'
+        })
+      }
+      break
+
+    case 'Tropical':
+      if (submission.special === 'None' && submission.biome === 'Marsh') {
+        callback(null, 'Marsh')
+      }
+      else if (submission.special === 'Star Bulb') {
+        if (
+          (submission.r2 === 'Faecium' ||
+            submission.r2 === 'Mordite' ||
+            submission.r3 === 'Faecium' ||
+            submission.r3 === 'Mordite') &&
+          submission.biome === 'Marsh'
+        ) {
+          callback(null, 'Marsh')
+        }
+        else if (
+          submission.biome === 'Lush' ||
+          submission.biome === 'Marsh'
+        ) {
+          callback(null, [
+            submission.biome,
+            'Double check if planet is Lush or Marsh'
+          ])
+        }
+      }
+      else {
+        callback({
+          status: 400,
+          message: 'Biome and Special Resource conflict with each other'
+        })
+      }
+      break
+
+    default:
+      if (submission.biome === biomeDescriptors[submission.descriptor]) {
+        callback(null, submission.biome)
+      }
+      else {
+        callback(null, [
+          biomeDescriptors[submission.descriptor],
+          'Biome and descriptor did not match, auto-corrected'
+        ])
+      }
+  }
+}
+
+function checkBiomeSpecial (submission, { biome }, callback) {
+  if (biome in biomeSpecials) {
+    if (submission.special !== biomeSpecials[biome]) {
       callback({
         status: 400,
         message: 'Biome and Special Resource conflict with each other'
@@ -497,7 +476,7 @@ export function validateEditedPlanet (submission, callback) {
       return
     }
   }
-  else if (cleanedPlanet.biome === 'Lush') {
+  else if (biome === 'Lush / Marsh') {
     if (submission.special !== 'Star Bulb') {
       callback({
         status: 400,
@@ -506,7 +485,16 @@ export function validateEditedPlanet (submission, callback) {
       return
     }
   }
-  else if (cleanedPlanet.biome === 'Marsh') {
+  else if (biome === 'Lush') {
+    if (submission.special !== 'Star Bulb') {
+      callback({
+        status: 400,
+        message: 'Biome and Special Resource conflict with each other'
+      })
+      return
+    }
+  }
+  else if (biome === 'Marsh') {
     if (submission.special !== 'Star Bulb' && submission.special !== 'None') {
       callback({
         status: 400,
@@ -525,9 +513,5 @@ export function validateEditedPlanet (submission, callback) {
     }
   }
 
-  cleanedPlanet.exotic = exoticBiomes.includes(cleanedPlanet.biome)
-  cleanedPlanet.extreme = submission.r1.startsWith('Activated')
-  cleanedPlanet.infested = cleanedPlanet.biome.startsWith('Infested')
-
-  callback(null, cleanedPlanet, messages)
+  callback(null)
 }

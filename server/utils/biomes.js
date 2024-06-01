@@ -199,5 +199,18 @@ export const biomeSpecials = {
   Frozen: 'Frost Crystal',
   Toxic: 'Fungal Mold',
   Irradiated: 'Gamma Root',
-  Scorched: 'Solanium'
+  Scorched: 'Solanium',
+  'Infested Barren': 'Cactus Flesh',
+  'Infested Frozen': 'Frost Crystal',
+  'Infested Toxic': 'Fungal Mold',
+  'Infested Irradiated': 'Gamma Root',
+  'Infested Scorched': 'Solanium'
+}
+
+export const infestedSpecials = {
+  'Cactus Flesh': 'Infested Barren',
+  'Frost Crystal': 'Infested Frozen',
+  'Fungal Mold': 'Infested Toxic',
+  'Gamma Root': 'Infested Irradiated',
+  Solanium: 'Infested Scorched'
 }
