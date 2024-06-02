@@ -10,6 +10,8 @@ import DetailsDialog from './components/DetailsDialog.jsx'
 import EditDialog from './components/EditDialog.jsx'
 import Header from './components/Header.jsx'
 import PlanetGrid from './components/PlanetGrid.jsx'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
 
 import {
   DispatchContext,
@@ -17,8 +19,11 @@ import {
   PlanetContext,
   planetReducer
 } from './state/PlanetContext.js'
+import MyTabPanel from './components/MyTabPanel.jsx'
 
 export default function App (props) {
+  const [currentTab, setCurrentTab] = React.useState(0)
+
   const [reducer, dispatch] = React.useReducer(planetReducer, REDUCER_INIT)
 
   const handleAddClick = (event) => {
@@ -40,14 +45,38 @@ export default function App (props) {
             display="flex"
             alignItems="center"
             justifyContent="center"
+            gap={2}
             sx={{ pb: 2, my: 2, borderBottom: 1, borderColor: 'divider' }}
           >
             <Button variant="contained" onClick={handleAddClick}>
               Add Planet
             </Button>
+
+            <Button
+              variant="contained"
+              onClick={(e) => {
+                e.preventDefault()
+                window.alert('Not Yet Implemented')
+              }}
+            >
+              Add System
+            </Button>
           </Box>
 
-          <PlanetGrid />
+          <Box sx={{ pb: 2 }}>
+            <Tabs
+              value={currentTab}
+              onChange={(event, newValue) => setCurrentTab(newValue)}
+              centered
+            >
+              <Tab label="Planets" />
+              <Tab label="Systems" />
+            </Tabs>
+          </Box>
+
+          <MyTabPanel value={currentTab} index={0}>
+            <PlanetGrid />
+          </MyTabPanel>
         </Container>
 
         {/* Dialogs */}
