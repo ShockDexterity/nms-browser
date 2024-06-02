@@ -1,3 +1,6 @@
+/**
+ * An object that maps unique biome descriptors to their more general biome type.
+ */
 export const biomeDescriptors = {
   '[REDACTED]': 'Chromatic',
   Acidic: 'Toxic',
@@ -170,6 +173,9 @@ export const biomeDescriptors = {
   'Xeno-Colony': 'Infested Lush'
 }
 
+/**
+ * Descriptors that can be shared between biomes.
+ */
 export const sharedDescriptors = [
   'Abandoned',
   'Desolate',
@@ -178,6 +184,9 @@ export const sharedDescriptors = [
   'Tropical'
 ]
 
+/**
+ * A list of the Exotic biomes.
+ */
 export const exoticBiomes = [
   'Beams',
   'Bone Spire',
@@ -194,6 +203,9 @@ export const exoticBiomes = [
   'Wire Cell'
 ]
 
+/**
+ * An object to speed up verifying if resource and biome match.
+ */
 export const biomeSpecials = {
   Barren: 'Cactus Flesh',
   Frozen: 'Frost Crystal',
@@ -207,10 +219,32 @@ export const biomeSpecials = {
   'Infested Scorched': 'Solanium'
 }
 
+/**
+ * An object to speed up verifying if resource and biome match.
+ */
 export const infestedSpecials = {
   'Cactus Flesh': 'Infested Barren',
   'Frost Crystal': 'Infested Frozen',
   'Fungal Mold': 'Infested Toxic',
   'Gamma Root': 'Infested Irradiated',
   Solanium: 'Infested Scorched'
+}
+
+/**
+ * An object that maps resources to the biomes they can be found in.
+ *
+ * Cobalt, Magnetized Ferrite, Salt, Silver, and Sodium can be found in any biome.
+ */
+export const resourceBiomes = {
+  Ammonia: ['Toxic', 'Chromatic'],
+  Basalt: ['Volcanic'],
+  Dioxite: ['Frozen', 'Chromatic'],
+  Faecium: ['Marsh'],
+  Gold: [...exoticBiomes],
+  Mordite: ['Marsh'],
+  Paraffinium: ['Lush', 'Marsh'],
+  Phosphorus: ['Scorched', 'Chromatic'],
+  Pyrite: ['Barren', 'Volcanic'],
+  'Rusted Metal': ['Dead'],
+  Uranium: ['Irradiated']
 }
