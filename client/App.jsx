@@ -19,7 +19,7 @@ import {
   PlanetContext,
   planetReducer
 } from './state/PlanetContext.js'
-import MyTabPanel from './components/MyTabPanel.jsx'
+import CustomTabPanel from './components/CustomTabPanel.jsx'
 
 export default function App (props) {
   const [currentTab, setCurrentTab] = React.useState(0)
@@ -74,9 +74,9 @@ export default function App (props) {
             </Tabs>
           </Box>
 
-          <MyTabPanel value={currentTab} index={0}>
+          <CustomTabPanel value={currentTab} index={0}>
             <PlanetGrid />
-          </MyTabPanel>
+          </CustomTabPanel>
         </Container>
 
         {/* Dialogs */}

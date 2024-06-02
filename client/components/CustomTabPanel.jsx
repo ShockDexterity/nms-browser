@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-export default function MyTabPanel ({ value, index, children, ...other }) {
+export default function CustomTabPanel ({ value, index, children, ...other }) {
   return (
     <div
       role="tabpanel"
@@ -15,7 +15,7 @@ export default function MyTabPanel ({ value, index, children, ...other }) {
   )
 }
 
-MyTabPanel.propTypes = {
+CustomTabPanel.propTypes = {
   children: PropTypes.node,
   index: PropTypes.number.isRequired,
   value: PropTypes.number.isRequired

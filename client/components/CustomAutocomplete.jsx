@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import Autocomplete from '@mui/material/Autocomplete'
 import TextField from '@mui/material/TextField'
 
-export default function MyAutocomplete ({
+export default function CustomAutocomplete ({
   label,
   name,
   options,
@@ -48,7 +48,7 @@ export default function MyAutocomplete ({
   )
 }
 
-MyAutocomplete.propTypes = {
+CustomAutocomplete.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   options: PropTypes.array.isRequired,

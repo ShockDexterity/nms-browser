@@ -14,7 +14,7 @@ import RadioGroup from '@mui/material/RadioGroup'
 import TextField from '@mui/material/TextField'
 
 import FormBox from './FormBox.jsx'
-import MyAutocomplete from './MyAutocomplete.jsx'
+import CustomAutocomplete from './CustomAutocomplete.jsx'
 
 import { DispatchContext, PlanetContext } from '../state/PlanetContext.js'
 import {
@@ -123,13 +123,13 @@ export default function EditDialog (props) {
         </FormBox>
 
         <FormBox>
-          <MyAutocomplete
+          <CustomAutocomplete
             label="Planet Descriptor"
             name="descriptor"
             options={biomeDescriptors}
             defaultValue={planet?.descriptor ?? ''}
           />
-          <MyAutocomplete
+          <CustomAutocomplete
             label="Biome"
             name="biome"
             options={biomes}
@@ -149,13 +149,13 @@ export default function EditDialog (props) {
         <Divider sx={{ my: 0.5 }} />
 
         <FormBox>
-          <MyAutocomplete
+          <CustomAutocomplete
             label="Special Resource"
             name="special"
             options={specialResources}
             defaultValue={planet?.special ?? 'None'}
           />
-          <MyAutocomplete
+          <CustomAutocomplete
             label="Resource 1"
             name="r1"
             options={stellarMetals}
@@ -164,13 +164,13 @@ export default function EditDialog (props) {
         </FormBox>
 
         <FormBox>
-          <MyAutocomplete
+          <CustomAutocomplete
             label="Resource 2"
             name="r2"
             options={otherResources}
             defaultValue={planet?.resources?.r2 ?? ''}
           />
-          <MyAutocomplete
+          <CustomAutocomplete
             label="Resource 3"
             name="r3"
             options={otherResources}
