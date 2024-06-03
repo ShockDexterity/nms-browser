@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid'
 
 import PlanetCard from './PlanetCard.jsx'
 
-import { ReducerContext, DispatchContext } from '../state/PlanetContext.js'
+import { ReducerContext, DispatchContext } from '../state/ReducerContext.js'
 
 import { getPlanets } from '../utils/fetcher.js'
 

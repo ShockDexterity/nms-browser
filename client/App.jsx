@@ -18,7 +18,7 @@ import {
   REDUCER_INIT,
   ReducerContext,
   planetReducer
-} from './state/PlanetContext.js'
+} from './state/ReducerContext.js'
 import CustomTabPanel from './components/CustomTabPanel.jsx'
 
 export default function App (props) {

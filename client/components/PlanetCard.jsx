@@ -10,7 +10,7 @@ import CardHeader from '@mui/material/CardHeader'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
-import { DispatchContext } from '../state/PlanetContext.js'
+import { DispatchContext } from '../state/ReducerContext.js'
 import SentinelText from './SentinelText.jsx'
 
 import { generateDescriptorText } from '../utils/texts.js'

@@ -3,7 +3,7 @@ import React from 'react'
 import Alert from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
-import { DispatchContext, ReducerContext } from '../state/PlanetContext.js'
+import { DispatchContext, ReducerContext } from '../state/ReducerContext.js'
 
 export default function AlertSnackbar (props) {
   const { showSnackbar, snackbarSeverity, snackbarMessage } =

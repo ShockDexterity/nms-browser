@@ -16,7 +16,7 @@ import TextField from '@mui/material/TextField'
 import FormBox from './FormBox.jsx'
 import CustomAutocomplete from './CustomAutocomplete.jsx'
 
-import { DispatchContext, ReducerContext } from '../state/PlanetContext.js'
+import { DispatchContext, ReducerContext } from '../state/ReducerContext.js'
 import {
   otherResources,
   specialResources,
