@@ -153,7 +153,7 @@ export default function EditDialog (props) {
             label="Special Resource"
             name="special"
             options={specialResources}
-            defaultValue={planet?.special ?? 'None'}
+            defaultValue={planet?.resources?.special ?? 'None'}
           />
           <CustomAutocomplete
             label="Resource 1"
