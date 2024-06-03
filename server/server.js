@@ -1,5 +1,5 @@
 import Express from 'express'
-import planetRouter from './api/api.js'
+import planetRouter from './api/planet_api.js'
 
 const app = Express()
 
