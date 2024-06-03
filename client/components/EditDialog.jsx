@@ -181,14 +181,14 @@ export default function EditDialog (props) {
         <Divider sx={{ my: 0.5 }} />
 
         <FormBox>
-          <FormLabel id={sLabelID}>Sentinel Level</FormLabel>
+          <FormLabel id={sLabelID}>Sentinel Presence</FormLabel>
         </FormBox>
         <FormBox>
           <RadioGroup
-            row
             defaultValue={planet?.sentinels ?? 'low'}
             name="sentinels"
             aria-labelledby={sLabelID}
+            row
           >
             <FormControlLabel label="Low" value="low" control={<Radio />} />
             <FormControlLabel label="High" value="high" control={<Radio />} />

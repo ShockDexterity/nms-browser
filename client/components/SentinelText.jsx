@@ -30,10 +30,10 @@ export default function SentinelText ({
 
   return (
     <Typography variant={variant} color={color} component="span">
-      Sentinel Presence:{' '}
       <Typography variant={variant} component="span" sx={getStyle(sentinels)}>
         {level}
-      </Typography>
+      </Typography>{' '}
+      Sentinel Presence
     </Typography>
   )
 }

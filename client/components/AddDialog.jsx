@@ -152,7 +152,7 @@ export default function AddDialog (props) {
         <Divider sx={{ my: 0.5 }} />
 
         <FormBox>
-          <FormLabel id={sLabelID}>Sentinel Level</FormLabel>
+          <FormLabel id={sLabelID}>Sentinel Presence</FormLabel>
         </FormBox>
         <FormBox>
           <RadioGroup

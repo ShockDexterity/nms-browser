@@ -70,16 +70,13 @@ export default function PlanetDetailsDialog (props) {
         <Divider sx={{ my: 1 }} />
 
         <Typography variant="body1">
-          {/* Only grab r1 r2 and r3 */}
-          Resources:{' '}
-          {[planet.resources.r1, planet.resources.r2, planet.resources.r3].join(
-            ' | '
-          )}
+          Resources: {planet.resources.r1} | {planet.resources.r2} |{' '}
+          {planet.resources.r3}
         </Typography>
 
         <Divider sx={{ my: 1 }} />
 
-        <Typography variant="body1">System: {planet.system}</Typography>
+        <Typography variant="body1">{planet.system} System</Typography>
       </DialogContent>
     </Dialog>
   )
