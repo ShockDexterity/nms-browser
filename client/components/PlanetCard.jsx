@@ -110,8 +110,8 @@ PlanetCard.propTypes = {
     exotic: PropTypes.bool.isRequired,
     extreme: PropTypes.bool.isRequired,
     infested: PropTypes.bool.isRequired,
-    special: PropTypes.string.isRequired,
     resources: PropTypes.exact({
+      special: PropTypes.string.isRequired,
       r1: PropTypes.string.isRequired,
       r2: PropTypes.string.isRequired,
       r3: PropTypes.string.isRequired

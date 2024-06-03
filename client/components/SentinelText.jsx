@@ -8,26 +8,29 @@ export default function SentinelText ({
   color = 'textPrimary',
   variant = 'body2'
 }) {
-  const level =
-    sentinels === 'low'
-      ? (
-      <>Low</>
-        )
-      : sentinels === 'high'
-        ? (
-      <>High</>
-          )
-        : sentinels === 'aggressive'
-          ? (
-      <b>AGGRESSIVE</b>
-            )
-          : (
-      <>CORRUPT</>
-            )
+  let level = ''
+
+  switch (sentinels) {
+    case 'low':
+      level = 'Low'
+      break
+
+    case 'high':
+      level = 'High'
+      break
+
+    case 'aggressive':
+      level = <b>AGGRESSIVE</b>
+      break
+
+    case 'corrupt':
+      level = 'CORRUPT'
+      break
+  }
 
   return (
     <Typography variant={variant} color={color} component="span">
-      Sentinel Level:{' '}
+      Sentinel Presence:{' '}
       <Typography variant={variant} component="span" sx={getStyle(sentinels)}>
         {level}
       </Typography>

@@ -56,8 +56,8 @@ export async function validateNewPlanet (submission, callback) {
     callback(err)
     return
   }
-  cleanedPlanet.special = submission.special
   cleanedPlanet.resources = {
+    special: submission.special,
     r1: submission.r1,
     r2: submission.r2,
     r3: submission.r3
@@ -165,8 +165,8 @@ export async function validateEditedPlanet (submission, callback) {
     callback(err)
     return
   }
-  cleanedPlanet.special = submission.special
   cleanedPlanet.resources = {
+    special: submission.special,
     r1: submission.r1,
     r2: submission.r2,
     r3: submission.r3
@@ -403,7 +403,8 @@ function checkBiomeNew (submission, _, callback) {
       else {
         callback({
           status: 400,
-          message: 'Biome and Special Resource conflict with each other'
+          // message: 'Biome and Special Resource conflict with each other'
+          message: `Descriptor ${submission.descriptor} cannot have special resource ${submission.special}`
         })
       }
       break
@@ -418,7 +419,8 @@ function checkBiomeNew (submission, _, callback) {
       else {
         callback({
           status: 400,
-          message: 'Biome and Special Resource conflict with each other'
+          // message: 'Biome and Special Resource conflict with each other'
+          message: `Descriptor ${submission.descriptor} cannot have special resource ${submission.special}`
         })
       }
       break
@@ -430,7 +432,8 @@ function checkBiomeNew (submission, _, callback) {
       else {
         callback({
           status: 400,
-          message: 'Biome and Special Resource conflict with each other'
+          // message: 'Biome and Special Resource conflict with each other'
+          message: `Descriptor ${submission.descriptor} cannot have special resource ${submission.special}`
         })
       }
       break
@@ -458,7 +461,8 @@ function checkBiomeNew (submission, _, callback) {
       else {
         callback({
           status: 400,
-          message: 'Biome and Special Resource conflict with each other'
+          // message: 'Biome and Special Resource conflict with each other'
+          message: `Descriptor ${submission.descriptor} cannot have special resource ${submission.special}`
         })
       }
       break
@@ -490,7 +494,8 @@ function checkBiomeEdited (submission, _, callback) {
       else {
         callback({
           status: 400,
-          message: 'Biome and Special Resource conflict with each other'
+          // message: 'Biome and Special Resource conflict with each other'
+          message: `Descriptor ${submission.descriptor} cannot have special resource ${submission.special}`
         })
       }
       break
@@ -508,7 +513,8 @@ function checkBiomeEdited (submission, _, callback) {
       else {
         callback({
           status: 400,
-          message: 'Biome and Special Resource conflict with each other'
+          // message: 'Biome and Special Resource conflict with each other'
+          message: `Descriptor ${submission.descriptor} cannot have special resource ${submission.special}`
         })
       }
       break
@@ -520,7 +526,8 @@ function checkBiomeEdited (submission, _, callback) {
       else {
         callback({
           status: 400,
-          message: 'Biome and Special Resource conflict with each other'
+          // message: 'Biome and Special Resource conflict with each other'
+          message: `Descriptor ${submission.descriptor} cannot have special resource ${submission.special}`
         })
       }
       break
@@ -552,7 +559,8 @@ function checkBiomeEdited (submission, _, callback) {
       else {
         callback({
           status: 400,
-          message: 'Biome and Special Resource conflict with each other'
+          // message: 'Biome and Special Resource conflict with each other'
+          message: `Descriptor ${submission.descriptor} cannot have special resource ${submission.special}`
         })
       }
       break
@@ -583,7 +591,8 @@ function verifySpecialResource (submission, extras, callback) {
     if (submission.special !== biomeSpecials[biome]) {
       callback({
         status: 400,
-        message: 'Biome and Special Resource conflict with each other'
+        // message: 'Biome and Special Resource conflict with each other'
+        message: `Biome ${biome} cannot have special resource ${submission.special}`
       })
       return
     }
@@ -592,7 +601,8 @@ function verifySpecialResource (submission, extras, callback) {
     if (submission.special !== 'Star Bulb') {
       callback({
         status: 400,
-        message: 'Biome and Special Resource conflict with each other'
+        // message: 'Biome and Special Resource conflict with each other'
+        message: `Biome ${biome} cannot have special resource ${submission.special}`
       })
       return
     }
@@ -601,7 +611,8 @@ function verifySpecialResource (submission, extras, callback) {
     if (submission.special !== 'Star Bulb') {
       callback({
         status: 400,
-        message: 'Biome and Special Resource conflict with each other'
+        // message: 'Biome and Special Resource conflict with each other'
+        message: `Biome ${biome} cannot have special resource ${submission.special}`
       })
       return
     }
@@ -610,7 +621,8 @@ function verifySpecialResource (submission, extras, callback) {
     if (submission.special !== 'Star Bulb' && submission.special !== 'None') {
       callback({
         status: 400,
-        message: 'Biome and Special Resource conflict with each other'
+        // message: 'Biome and Special Resource conflict with each other'
+        message: `Biome ${biome} cannot have special resource ${submission.special}`
       })
       return
     }
@@ -619,7 +631,8 @@ function verifySpecialResource (submission, extras, callback) {
     if (submission.special !== 'None') {
       callback({
         status: 400,
-        message: 'Biome and Special Resource conflict with each other'
+        // message: 'Biome and Special Resource conflict with each other'
+        message: `Biome ${biome} cannot have special resource ${submission.special}`
       })
       return
     }

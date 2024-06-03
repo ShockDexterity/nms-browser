@@ -64,13 +64,17 @@ export default function DetailsDialog (props) {
         <Divider sx={{ my: 1 }} />
 
         <Typography variant="body1">
-          Special Resource: {planet.special}
+          Special Resource: {planet.resources.special}
         </Typography>
 
         <Divider sx={{ my: 1 }} />
 
         <Typography variant="body1">
-          Resources: {Array.from(Object.values(planet.resources)).join(' | ')}
+          {/* Only grab r1 r2 and r3 */}
+          Resources:{' '}
+          {[planet.resources.r1, planet.resources.r2, planet.resources.r3].join(
+            ' | '
+          )}
         </Typography>
 
         <Divider sx={{ my: 1 }} />
