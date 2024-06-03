@@ -3,8 +3,8 @@ import Express, { Router } from 'express'
 import * as DB from '../mongodb/mongodb.js'
 import { validateEditedPlanet, validateNewPlanet } from '../utils/validators.js'
 
-const dbHandle = DB.connect('NMSP')
-const planetsCollection = dbHandle.collection('planets')
+const database = DB.connect('NMSP')
+// const planetsCollection = database.collection('planets')
 
 const router = Router({
   caseSensitive: false,
@@ -14,7 +14,7 @@ const router = Router({
 router.use(Express.json({ type: 'application/json' }))
 
 router.get('/', async (req, res) => {
-  const dbPlanets = await DB.retrieveAllPlanets(planetsCollection)
+  const dbPlanets = await DB.retrieveAllPlanets(database)
 
   if (dbPlanets.length === 0) {
     res.status(500).json({ error: 'No planets found' })
@@ -31,17 +31,14 @@ router.put('/', async (req, res) => {
       return
     }
 
-    const shouldNotExist = await DB.getPlanetByName(
-      planetsCollection,
-      validPlanet.name
-    )
+    const shouldNotExist = await DB.getPlanetByName(database, validPlanet.name)
     if (shouldNotExist) {
       res.status(400).json({ error: true, message: 'Planet already exists' })
       return
     }
 
     try {
-      await DB.insertPlanet(planetsCollection, validPlanet)
+      await DB.insertPlanet(database, validPlanet)
       res.status(200).json({
         success: true,
         message: `${validPlanet.name} added`,
@@ -67,17 +64,14 @@ router.put('/edit', async (req, res) => {
       }
     })
 
-    const planetToEdit = await DB.getPlanetByID(
-      planetsCollection,
-      validInfo._id
-    )
+    const planetToEdit = await DB.getPlanetById(database, validInfo._id)
     if (!planetToEdit) {
       res.status(400).json({ error: true, message: 'Planet does not exist' })
       return
     }
 
     try {
-      await DB.updatePlanet(planetsCollection, planetToEdit._id, validInfo)
+      await DB.updatePlanet(database, planetToEdit._id, validInfo)
       res.status(200).json({
         success: true,
         message: `${validInfo.name} updated`,
@@ -97,7 +91,7 @@ router.delete('/:id', async (req, res) => {
     return
   }
 
-  const deletedPlanet = await DB.deletePlanet(planetsCollection, _id)
+  const deletedPlanet = await DB.deletePlanetById(database, _id)
   if (!deletedPlanet) {
     res.status(400).json({ error: true, message: 'Unable to delete planet' })
     return

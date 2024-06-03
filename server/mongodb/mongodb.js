@@ -30,37 +30,32 @@ export function connect (dbName) {
   }
 }
 
-export async function retrieveAllPlanets (collection) {
+export async function retrieveAllPlanets (database) {
   const query = {}
   const projection = {}
   const sort = { system: 1, name: 1 }
 
-  return await collection.find(query).project(projection).sort(sort).toArray()
+  return await database
+    .collection('planets')
+    .find(query)
+    .project(projection)
+    .sort(sort)
+    .toArray()
 }
 
-export async function getPlanetByName (collection, name) {
-  const query = { name }
-  const projection = {}
-
-  const data = await collection.findOne(query, projection)
-
-  return data
+export async function getPlanetByName (database, name) {
+  return await database.collection('planets').findOne({ name })
 }
 
-export async function getPlanetByID (collection, _id) {
-  const query = { _id: new ObjectId(_id) }
-  const projection = {}
-
-  const data = await collection.findOne(query, projection)
-
-  return data
+export async function getPlanetById (database, _id) {
+  return await database.collection('planets').findOne(new ObjectId(_id))
 }
 
-export async function insertPlanet (collection, planet) {
-  return await collection.insertOne(planet)
+export async function insertPlanet (database, planet) {
+  return await database.collection('planets').insertOne(planet)
 }
 
-export async function updatePlanet (collection, _id, replacementData) {
+export async function updatePlanet (database, _id, replacementData) {
   const query = { _id: new ObjectId(_id) }
 
   const dataWithoutId = { ...replacementData }
@@ -68,14 +63,14 @@ export async function updatePlanet (collection, _id, replacementData) {
 
   const replacer = { $set: dataWithoutId }
 
-  const response = await collection.updateOne(query, replacer)
+  const response = await database
+    .collection('planets')
+    .updateOne(query, replacer)
   return response
 }
 
-export async function deletePlanet (collection, _id) {
-  const query = { _id: new ObjectId(_id) }
-
-  const data = await collection.findOneAndDelete(query)
-
-  return data
+export async function deletePlanetById (database, _id) {
+  return await database
+    .collection('planets')
+    .findOneAndDelete({ _id: new ObjectId(_id) })
 }
