@@ -3,11 +3,11 @@ import React from 'react'
 import Alert from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
-import { DispatchContext, PlanetContext } from '../state/PlanetContext.js'
+import { DispatchContext, ReducerContext } from '../state/PlanetContext.js'
 
 export default function AlertSnackbar (props) {
   const { showSnackbar, snackbarSeverity, snackbarMessage } =
-    React.useContext(PlanetContext)
+    React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
   const handleClose = (event, reason) => {

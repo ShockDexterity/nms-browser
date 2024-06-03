@@ -5,14 +5,14 @@ import Grid from '@mui/material/Grid'
 
 import PlanetCard from './PlanetCard.jsx'
 
-import { PlanetContext, DispatchContext } from '../state/PlanetContext.js'
+import { ReducerContext, DispatchContext } from '../state/PlanetContext.js'
 
 import { getPlanets } from '../utils/fetcher.js'
 
 export default function PlanetGrid ({ planetFilter = '', ...props }) {
   const [planets, setPlanets] = React.useState([])
 
-  const { refresh } = React.useContext(PlanetContext)
+  const { refresh } = React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
   React.useEffect(() => {

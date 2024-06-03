@@ -7,12 +7,12 @@ import {
   Typography
 } from '@mui/material'
 
-import { DispatchContext, PlanetContext } from '../state/PlanetContext.js'
+import { DispatchContext, ReducerContext } from '../state/PlanetContext.js'
 import { generateBiomeBorder } from '../utils/styles.js'
 import SentinelText from './SentinelText.jsx'
 
-export default function DetailsDialog (props) {
-  const { showDialog, dialogTitle, planet } = React.useContext(PlanetContext)
+export default function PlanetDetailsDialog (props) {
+  const { showDialog, dialogTitle, planet } = React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
   const handleClose = () => {

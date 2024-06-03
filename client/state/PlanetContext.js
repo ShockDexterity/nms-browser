@@ -1,6 +1,6 @@
 import { createContext } from 'react'
 
-export const PlanetContext = createContext(null)
+export const ReducerContext = createContext(null)
 export const DispatchContext = createContext(null)
 
 export const REDUCER_INIT = {

@@ -16,7 +16,7 @@ import TextField from '@mui/material/TextField'
 import FormBox from './FormBox.jsx'
 import CustomAutocomplete from './CustomAutocomplete.jsx'
 
-import { DispatchContext, PlanetContext } from '../state/PlanetContext.js'
+import { DispatchContext, ReducerContext } from '../state/PlanetContext.js'
 import {
   otherResources,
   specialResources,
@@ -26,7 +26,7 @@ import { updatePlanet } from '../utils/fetcher.js'
 import { biomeDescriptors, biomes } from '../utils/descriptors.js'
 
 export default function EditDialog (props) {
-  const { showDialog, dialogTitle, planet } = React.useContext(PlanetContext)
+  const { showDialog, dialogTitle, planet } = React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
   const sLabelID = React.useId()

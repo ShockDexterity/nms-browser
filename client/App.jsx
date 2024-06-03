@@ -6,7 +6,7 @@ import Container from '@mui/material/Container'
 
 import AddDialog from './components/AddDialog.jsx'
 import AlertSnackbar from './components/AlertSnackbar.jsx'
-import DetailsDialog from './components/DetailsDialog.jsx'
+import PlanetDetailsDialog from './components/PlanetDetailsDialog.jsx'
 import EditDialog from './components/EditDialog.jsx'
 import Header from './components/Header.jsx'
 import PlanetGrid from './components/PlanetGrid.jsx'
@@ -16,7 +16,7 @@ import Tab from '@mui/material/Tab'
 import {
   DispatchContext,
   REDUCER_INIT,
-  PlanetContext,
+  ReducerContext,
   planetReducer
 } from './state/PlanetContext.js'
 import CustomTabPanel from './components/CustomTabPanel.jsx'
@@ -32,7 +32,7 @@ export default function App (props) {
   }
 
   return (
-    <PlanetContext.Provider value={reducer}>
+    <ReducerContext.Provider value={reducer}>
       <DispatchContext.Provider value={dispatch}>
         {/* Main Container */}
         <Container>
@@ -81,12 +81,12 @@ export default function App (props) {
 
         {/* Dialogs */}
         <AddDialog />
-        <DetailsDialog />
         <EditDialog />
+        <PlanetDetailsDialog />
 
         {/* Snackbar */}
         <AlertSnackbar />
       </DispatchContext.Provider>
-    </PlanetContext.Provider>
+    </ReducerContext.Provider>
   )
 }
