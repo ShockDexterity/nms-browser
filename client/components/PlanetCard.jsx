@@ -23,13 +23,17 @@ export default function PlanetCard ({ planet }) {
   const handleDetailsClick = (event) => {
     event.preventDefault()
     dispatch({ type: 'SET_PLANET', planet })
-    dispatch({ type: 'DETAILS', title: planet.name })
+    dispatch({ type: 'DETAILS', title: planet.name, _for: 'planet' })
   }
 
   const handleEditClick = (event) => {
     event.preventDefault()
     dispatch({ type: 'SET_PLANET', planet })
-    dispatch({ type: 'EDIT', title: `Edit Planet "${planet.name}"` })
+    dispatch({
+      type: 'EDIT',
+      title: `Edit Planet "${planet.name}"`,
+      _for: 'planet'
+    })
   }
 
   const handleDeleteClick = async (event) => {
@@ -47,7 +51,7 @@ export default function PlanetCard ({ planet }) {
           dispatch({ type: 'SHOW_SNACKBAR' })
         }
         else {
-          dispatch({ type: 'REFRESH' })
+          dispatch({ type: 'REFRESH_PLANETS' })
           dispatch({ type: 'HIDE_SNACKBAR' })
           dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
           dispatch({

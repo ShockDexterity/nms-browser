@@ -25,7 +25,7 @@ export default function PlanetDetailsDialog (props) {
 
   return (
     <Dialog
-      open={showDialog === 'details'}
+      open={showDialog === 'planet_details'}
       onClose={handleClose}
       fullWidth={true}
       maxWidth={'sm'}

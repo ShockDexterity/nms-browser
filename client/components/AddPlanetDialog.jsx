@@ -25,7 +25,7 @@ import {
 import { addPlanet } from '../utils/fetcher.js'
 import { biomeDescriptors } from '../utils/descriptors.js'
 
-export default function AddDialog (props) {
+export default function AddPlanetDialog (props) {
   const { showDialog, dialogTitle } = React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
@@ -57,7 +57,7 @@ export default function AddDialog (props) {
         dispatch({ type: 'SHOW_SNACKBAR' })
       }
       else if (response?.additional.length > 0) {
-        dispatch({ type: 'REFRESH' })
+        dispatch({ type: 'REFRESH_PLANETS' })
         dispatch({ type: 'HIDE_SNACKBAR' })
         dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
         dispatch({
@@ -71,7 +71,7 @@ export default function AddDialog (props) {
         handleClose()
       }
       else {
-        dispatch({ type: 'REFRESH' })
+        dispatch({ type: 'REFRESH_PLANETS' })
         dispatch({ type: 'HIDE_SNACKBAR' })
         dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
         dispatch({ type: 'SET_SNACKBAR_MESSAGE', message: 'Planet added' })
@@ -91,7 +91,7 @@ export default function AddDialog (props) {
 
   return (
     <Dialog
-      open={showDialog === 'add'}
+      open={showDialog === 'add_planet'}
       onClose={handleClose}
       fullWidth={true}
       maxWidth="sm"

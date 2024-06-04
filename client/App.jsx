@@ -4,10 +4,10 @@ import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Container from '@mui/material/Container'
 
-import AddDialog from './components/AddDialog.jsx'
+import AddPlanetDialog from './components/AddPlanetDialog.jsx'
 import AlertSnackbar from './components/AlertSnackbar.jsx'
 import PlanetDetailsDialog from './components/PlanetDetailsDialog.jsx'
-import EditDialog from './components/EditDialog.jsx'
+import EditPlanetDialog from './components/EditPlanetDialog.jsx'
 import Header from './components/Header.jsx'
 import PlanetGrid from './components/PlanetGrid.jsx'
 import Tabs from '@mui/material/Tabs'
@@ -26,9 +26,9 @@ export default function App (props) {
 
   const [reducer, dispatch] = React.useReducer(planetReducer, REDUCER_INIT)
 
-  const handleAddClick = (event) => {
+  const handleAddPlanetClick = (event) => {
     event.preventDefault()
-    dispatch({ type: 'ADD' })
+    dispatch({ type: 'ADD', _for: 'planet' })
   }
 
   return (
@@ -48,7 +48,7 @@ export default function App (props) {
             gap={2}
             sx={{ pb: 2, my: 2, borderBottom: 1, borderColor: 'divider' }}
           >
-            <Button variant="contained" onClick={handleAddClick}>
+            <Button variant="contained" onClick={handleAddPlanetClick}>
               Add Planet
             </Button>
 
@@ -80,8 +80,8 @@ export default function App (props) {
         </Container>
 
         {/* Dialogs */}
-        <AddDialog />
-        <EditDialog />
+        <AddPlanetDialog />
+        <EditPlanetDialog />
         <PlanetDetailsDialog />
 
         {/* Snackbar */}

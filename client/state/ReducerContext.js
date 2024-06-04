@@ -11,16 +11,17 @@ export const REDUCER_INIT = {
   snackbarSeverity: 'warning',
   snackbarMessage: 'Snackbar message not set',
   planet: null,
-  refresh: true
+  refreshPlanets: true,
+  refreshSystems: true
 }
 
 export function planetReducer (state, action) {
   switch (action.type) {
-    case 'REFRESH':
-      return { ...state, refresh: true }
+    case 'REFRESH_PLANETS':
+      return { ...state, refreshPlanets: true }
 
-    case 'STOP_REFRESH':
-      return { ...state, refresh: false }
+    case 'STOP_REFRESH_PLANETS':
+      return { ...state, refreshPlanets: false }
 
     case 'SHOW_SNACKBAR':
       return { ...state, showSnackbar: true }
@@ -38,21 +39,21 @@ export function planetReducer (state, action) {
       return {
         ...state,
         dialogTitle: action.title,
-        showDialog: 'details'
+        showDialog: `${action._for}_details`
       }
 
     case 'ADD':
       return {
         ...state,
         dialogTitle: 'Add a new Planet',
-        showDialog: 'add'
+        showDialog: `add_${action._for}`
       }
 
     case 'EDIT':
       return {
         ...state,
         dialogTitle: action.title,
-        showDialog: 'edit'
+        showDialog: `edit_${action._for}`
       }
 
     case 'CLOSE_DIALOG':

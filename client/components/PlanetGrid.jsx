@@ -12,7 +12,7 @@ import { getPlanets } from '../utils/fetcher.js'
 export default function PlanetGrid ({ planetFilter = '', ...props }) {
   const [planets, setPlanets] = React.useState([])
 
-  const { refresh } = React.useContext(ReducerContext)
+  const { refreshPlanets } = React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
   React.useEffect(() => {
@@ -26,12 +26,12 @@ export default function PlanetGrid ({ planetFilter = '', ...props }) {
       }
     }
 
-    if (refresh) {
+    if (refreshPlanets) {
       fetchPlanets()
       // console.log('Refreshed')
-      dispatch({ type: 'STOP_REFRESH' })
+      dispatch({ type: 'STOP_REFRESH_PLANETS' })
     }
-  }, [dispatch, refresh])
+  }, [dispatch, refreshPlanets])
 
   if (planetFilter) {
     const filteredPlanets = planets

@@ -25,7 +25,7 @@ import {
 import { updatePlanet } from '../utils/fetcher.js'
 import { biomeDescriptors, biomes } from '../utils/descriptors.js'
 
-export default function EditDialog (props) {
+export default function EditPlanetDialog (props) {
   const { showDialog, dialogTitle, planet } = React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
@@ -58,7 +58,7 @@ export default function EditDialog (props) {
         dispatch({ type: 'SHOW_SNACKBAR' })
       }
       else if (response?.additional.length > 0) {
-        dispatch({ type: 'REFRESH' })
+        dispatch({ type: 'REFRESH_PLANETS' })
         dispatch({ type: 'HIDE_SNACKBAR' })
         dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
         dispatch({
@@ -72,7 +72,7 @@ export default function EditDialog (props) {
         handleClose()
       }
       else {
-        dispatch({ type: 'REFRESH' })
+        dispatch({ type: 'REFRESH_PLANETS' })
         dispatch({ type: 'HIDE_SNACKBAR' })
         dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
         dispatch({
@@ -93,7 +93,7 @@ export default function EditDialog (props) {
 
   return (
     <Dialog
-      open={showDialog === 'edit'}
+      open={showDialog === 'edit_planet'}
       onClose={handleClose}
       fullWidth={true}
       maxWidth="sm"
