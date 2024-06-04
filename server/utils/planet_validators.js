@@ -12,7 +12,9 @@ import {
   infestedSpecials,
   resourceBiomes,
   sharedDescriptors
-} from './biomes.js'
+} from '../data/biome_info.js'
+
+import PromiseWrapper from './promise_wrapper.js'
 
 /**
  *
@@ -20,7 +22,7 @@ import {
  * @param {function} callback the function to call after validation
  * @returns {void}
  */
-export async function validateNewPlanet (submission, callback) {
+export async function newPlanet (submission, callback) {
   // Check if the submission is an object and not an array
   try {
     await PromiseWrapper(checkShape, submission, { checkID: false })
@@ -128,7 +130,7 @@ export async function validateNewPlanet (submission, callback) {
  * @param {function} callback the function to call after validation
  * @returns {void}
  */
-export async function validateEditedPlanet (submission, callback) {
+export async function editedPlanet (submission, callback) {
   // Check if the submission is an object and not an array
   try {
     await PromiseWrapper(checkShape, submission, { checkID: true })
@@ -229,27 +231,6 @@ export async function validateEditedPlanet (submission, callback) {
  * @param {object=} [extras] Additional data to pass to the checker
  * @returns {Promise} A Promise that resolves or rejects based on the callback
  */
-
-/**
- * Wraps a function that follows the Node.js callback pattern into a Promise.
- *
- * @param {function} wrapped - The function to be wrapped.
- * @param {object} info - The information to be passed to the wrapped function.
- * @param {object=} [extras] - Additional parameters to be passed to the wrapped function.
- * @returns {Promise<any>} A Promise that resolves with the result of the wrapped function or rejects with an error.
- */
-function PromiseWrapper (wrapped, info, extras = null) {
-  return new Promise((resolve, reject) => {
-    wrapped(info, extras, (err, res = null) => {
-      if (err) {
-        reject(err)
-      }
-      else {
-        resolve(res)
-      }
-    })
-  })
-}
 
 /**
  * Checks the shape of a planet submission.

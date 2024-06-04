@@ -1,10 +1,9 @@
 import Express, { Router } from 'express'
 
 import * as DB from '../mongodb/mongodb.js'
-import { validateEditedPlanet, validateNewPlanet } from '../utils/validators.js'
+import { editedPlanet, newPlanet } from '../utils/planet_validators.js'
 
 const database = DB.connect('NMSP')
-// const planetsCollection = database.collection('planets')
 
 const router = Router({
   caseSensitive: false,
@@ -12,6 +11,8 @@ const router = Router({
 })
 
 router.use(Express.json({ type: 'application/json' }))
+
+export default router
 
 router.get('/', async (req, res) => {
   const dbPlanets = await DB.retrieveAllPlanets(database)
@@ -25,7 +26,7 @@ router.get('/', async (req, res) => {
 })
 
 router.put('/', async (req, res) => {
-  validateNewPlanet(req.body, async (err, validPlanet, messages) => {
+  newPlanet(req.body, async (err, validPlanet, messages) => {
     if (err) {
       res.status(err.status).json({ error: true, message: err.message })
       return
@@ -52,7 +53,7 @@ router.put('/', async (req, res) => {
 })
 
 router.put('/edit', async (req, res) => {
-  validateEditedPlanet(req.body, async (err, validInfo, messages) => {
+  editedPlanet(req.body, async (err, validInfo, messages) => {
     if (err) {
       res.status(err.status).json({ error: true, message: err.message })
       return
@@ -74,7 +75,7 @@ router.put('/edit', async (req, res) => {
       await DB.updatePlanet(database, planetToEdit._id, validInfo)
       res.status(200).json({
         success: true,
-        message: `${validInfo.name} updated`,
+        message: `${planetToEdit.name} updated to ${validInfo.name}`,
         additional: messages
       })
     }
@@ -103,5 +104,3 @@ router.delete('/:id', async (req, res) => {
     message: `"${deletedPlanet.name}" deleted`
   })
 })
-
-export default router
