@@ -12,7 +12,9 @@ export const REDUCER_INIT = {
   snackbarMessage: 'Snackbar message not set',
   planet: null,
   refreshPlanets: true,
-  refreshSystems: true
+  refreshSystems: true,
+  planetFilters: {},
+  systemFilters: {}
 }
 
 export function planetReducer (state, action) {
@@ -22,6 +24,12 @@ export function planetReducer (state, action) {
 
     case 'STOP_REFRESH_PLANETS':
       return { ...state, refreshPlanets: false }
+
+    case 'REFRESH_SYSTEMS':
+      return { ...state, refreshSystems: true }
+
+    case 'STOP_REFRESH_SYSTEMS':
+      return { ...state, refreshSystems: false }
 
     case 'SHOW_SNACKBAR':
       return { ...state, showSnackbar: true }
@@ -61,6 +69,9 @@ export function planetReducer (state, action) {
 
     case 'SET_PLANET':
       return { ...state, planet: action.planet }
+
+    case 'SET_SYSTEM':
+      return { ...state, system: action.system }
 
     default:
       return state

@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 import { Grid } from '@mui/material'
 
@@ -9,7 +8,7 @@ import { ReducerContext, DispatchContext } from '../state/ReducerContext.js'
 
 import { getPlanets } from '../utils/fetcher.js'
 
-export default function PlanetGrid ({ planetFilter = '', ...props }) {
+export default function PlanetGrid (props) {
   const [planets, setPlanets] = React.useState([])
 
   const { refreshPlanets } = React.useContext(ReducerContext)
@@ -33,49 +32,53 @@ export default function PlanetGrid ({ planetFilter = '', ...props }) {
     }
   }, [dispatch, refreshPlanets])
 
-  if (planetFilter) {
-    const filteredPlanets = planets
-      .filter((planet) =>
-        checkResources(
-          Object.values(planet.resources),
-          planet.special,
-          planetFilter
-        )
-      )
-      .map((planet) => {
-        return <PlanetCard key={planet._id} planet={planet} {...props} />
-      })
+  return (
+    <Grid container spacing={2}>
+      {planets.map((planet) => {
+        return <PlanetCard key={planet._id} planet={planet} />
+      })}
+    </Grid>
+  )
 
-    return (
-      <Grid>
-        {filteredPlanets.length > 0 ? filteredPlanets : <p>No Planets Found</p>}
-      </Grid>
-    )
-  }
-  else {
-    return (
-      <Grid container spacing={2}>
-        {planets
-          .filter((planet) =>
-            checkResources(
-              Object.values(planet.resources),
-              planet.special,
-              planetFilter
-            )
-          )
-          .map((planet) => {
-            return <PlanetCard key={planet._id} planet={planet} {...props} />
-          })}
-      </Grid>
-    )
-  }
+  // if (planetFilter) {
+  //   const filteredPlanets = planets
+  //     .filter((planet) =>
+  //       checkResources(
+  //         Object.values(planet.resources),
+  //         planet.special,
+  //         planetFilter
+  //       )
+  //     )
+  //     .map((planet) => {
+  //       return <PlanetCard key={planet._id} planet={planet} />
+  //     })
+
+  //   return (
+  //     <Grid>
+  //       {filteredPlanets.length > 0 ? filteredPlanets : <p>No Planets Found</p>}
+  //     </Grid>
+  //   )
+  // }
+  // else {
+  //   return (
+  //     <Grid container spacing={2}>
+  //       {planets
+  //         .filter((planet) =>
+  //           checkResources(
+  //             Object.values(planet.resources),
+  //             planet.special,
+  //             planetFilter
+  //           )
+  //         )
+  //         .map((planet) => {
+  //           return <PlanetCard key={planet._id} planet={planet} />
+  //         })}
+  //     </Grid>
+  //   )
+  // }
 }
 
-// PropTypes
-PlanetGrid.propTypes = {
-  planetFilter: PropTypes.string
-}
-
+// eslint-disable-next-line no-unused-vars
 function checkResources (resources, special, value) {
   return (
     resources.some((resource) =>

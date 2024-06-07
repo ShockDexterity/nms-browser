@@ -108,7 +108,7 @@ export default function PlanetCard ({ planet }) {
 
 // PropTypes
 PlanetCard.propTypes = {
-  planet: PropTypes.shape({
+  planet: PropTypes.exact({
     _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     descriptor: PropTypes.string.isRequired,
