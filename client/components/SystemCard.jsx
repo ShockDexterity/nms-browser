@@ -12,8 +12,10 @@ import {
   Typography
 } from '@mui/material'
 
-import { DispatchContext } from '../state/ReducerContext.js'
 import ConflictText from './ConflictText.jsx'
+
+import { DispatchContext } from '../state/ReducerContext.js'
+import { generateSystemBorder } from '../utils/styles.js'
 
 export default function SystemCard ({ system }) {
   const dispatch = React.useContext(DispatchContext)
@@ -77,13 +79,7 @@ export default function SystemCard ({ system }) {
 
   return (
     <Grid item xs={12} sm={6} md={4} lg={3}>
-      <Card
-        sx={{
-          border: 2,
-          borderColor: 'black',
-          borderRadius: '2px'
-        }}
-      >
+      <Card sx={generateSystemBorder(system.atlas, system.blackhole)}>
         <CardActionArea onClick={handleDetailsClick}>
           <CardHeader
             title={system.name}

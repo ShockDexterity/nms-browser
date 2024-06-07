@@ -3,7 +3,11 @@ import PropTypes from 'prop-types'
 
 import { Typography } from '@mui/material'
 
-export default function ConflictText ({ conflict }) {
+export default function ConflictText ({
+  conflict,
+  variant = 'body2',
+  color = 'textSecondary'
+}) {
   let level = ''
 
   switch (conflict) {
@@ -25,12 +29,14 @@ export default function ConflictText ({ conflict }) {
   }
 
   return (
-    <Typography variant="body2" color="textSecondary" component="span">
+    <Typography variant={variant} color={color} component="span">
       Conflict level: {level}
     </Typography>
   )
 }
 
 ConflictText.propTypes = {
-  conflict: PropTypes.oneOf(['low', 'medium', 'high', 'outlaw']).isRequired
+  conflict: PropTypes.oneOf(['low', 'medium', 'high', 'outlaw']).isRequired,
+  variant: PropTypes.string,
+  color: PropTypes.string
 }

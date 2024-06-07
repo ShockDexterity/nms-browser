@@ -18,7 +18,8 @@ export function generateBiomeBorder (
   if (isExtreme && isInfested) {
     return {
       border,
-      borderColor: 'linear-gradient(to right, #f44336 50%, #66bb6a 50%)',
+      borderImageSlice: 1,
+      borderImageSource: 'linear-gradient(to right, #f44336 50%, #66bb6a 50%)',
       borderRadius
     }
   }
@@ -40,6 +41,45 @@ export function generateBiomeBorder (
     return {
       border,
       borderColor: 'text.secondary',
+      borderRadius
+    }
+  }
+  else if (useDefault) {
+    return {
+      border,
+      borderColor: 'black',
+      borderRadius
+    }
+  }
+  else {
+    return {}
+  }
+}
+
+export function generateSystemBorder (
+  hasAtlas,
+  hasBlackhole,
+  useDefault = true
+) {
+  if (hasAtlas && hasBlackhole) {
+    return {
+      border,
+      borderImageSlice: 1,
+      borderImageSource: 'linear-gradient(to right, #f44336 50%, #ce93d8 50%)',
+      borderRadius
+    }
+  }
+  else if (hasAtlas) {
+    return {
+      border,
+      borderColor: 'error.main',
+      borderRadius
+    }
+  }
+  else if (hasBlackhole) {
+    return {
+      border,
+      borderColor: 'secondary.main',
       borderRadius
     }
   }

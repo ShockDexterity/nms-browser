@@ -17,8 +17,10 @@ import {
   ReducerContext,
   planetReducer
 } from './state/ReducerContext.js'
+
 import CustomTabPanel from './components/CustomTabPanel.jsx'
 import SystemGrid from './components/SystemGrid.jsx'
+import SystemDetailsDialog from './components/SystemDetailsDialog.jsx'
 
 export default function App (props) {
   const [currentTab, setCurrentTab] = React.useState(0)
@@ -108,6 +110,7 @@ export default function App (props) {
         <AddPlanetDialog />
         <EditPlanetDialog />
         <PlanetDetailsDialog />
+        <SystemDetailsDialog />
 
         {/* Snackbar */}
         <AlertSnackbar />
