@@ -1,4 +1,5 @@
 import React from 'react'
+
 import {
   Dialog,
   DialogContent,
@@ -8,6 +9,7 @@ import {
 } from '@mui/material'
 
 import { DispatchContext, ReducerContext } from '../state/ReducerContext.js'
+
 import { generateBiomeBorder } from '../utils/styles.js'
 import SentinelText from './SentinelText.jsx'
 

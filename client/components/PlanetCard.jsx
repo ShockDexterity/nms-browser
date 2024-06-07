@@ -1,17 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import Button from '@mui/material/Button'
-import Card from '@mui/material/Card'
-import CardActionArea from '@mui/material/CardActionArea'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import CardHeader from '@mui/material/CardHeader'
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Grid,
+  Typography
+} from '@mui/material'
+
+import SentinelText from './SentinelText.jsx'
 
 import { DispatchContext } from '../state/ReducerContext.js'
-import SentinelText from './SentinelText.jsx'
 
 import { generateDescriptorText } from '../utils/texts.js'
 import { generateBiomeBorder } from '../utils/styles.js'

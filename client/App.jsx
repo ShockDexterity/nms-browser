@@ -1,8 +1,6 @@
 import React from 'react'
 
-import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
-import Container from '@mui/material/Container'
+import { Box, Button, Container, Drawer, Typography } from '@mui/material'
 
 import AddPlanetDialog from './components/AddPlanetDialog.jsx'
 import AlertSnackbar from './components/AlertSnackbar.jsx'
@@ -30,6 +28,17 @@ export default function App (props) {
     event.preventDefault()
     dispatch({ type: 'ADD', _for: 'planet' })
   }
+
+  const [drawerOpen, setDrawerOpen] = React.useState(false)
+
+  const [openDrawer, closeDrawer] = [
+    () => {
+      setDrawerOpen(true)
+    },
+    () => {
+      setDrawerOpen(false)
+    }
+  ]
 
   return (
     <ReducerContext.Provider value={reducer}>
@@ -61,6 +70,8 @@ export default function App (props) {
             >
               Add System
             </Button>
+
+            <Button onClick={openDrawer}>Filters</Button>
           </Box>
 
           <Box sx={{ pb: 2 }}>
@@ -78,6 +89,16 @@ export default function App (props) {
             <PlanetGrid />
           </CustomTabPanel>
         </Container>
+
+        {/* Filter Drawer */}
+        <Drawer open={drawerOpen} onClose={closeDrawer}>
+          <Typography visibility={currentTab === 0 ? 'visible' : 'collapse'}>
+            Planet Filters
+          </Typography>
+          <Typography visibility={currentTab === 1 ? 'visible' : 'collapse'}>
+            System Filters
+          </Typography>
+        </Drawer>
 
         {/* Dialogs */}
         <AddPlanetDialog />
