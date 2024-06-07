@@ -57,6 +57,8 @@ export default function App (props) {
             gap={2}
             sx={{ pb: 2, my: 2, borderBottom: 1, borderColor: 'divider' }}
           >
+            <Button onClick={openDrawer}>Filters</Button>
+
             <Button variant="contained" onClick={handleAddPlanetClick}>
               Add Planet
             </Button>
@@ -70,8 +72,6 @@ export default function App (props) {
             >
               Add System
             </Button>
-
-            <Button onClick={openDrawer}>Filters</Button>
           </Box>
 
           <Box sx={{ pb: 2 }}>
