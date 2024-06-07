@@ -18,19 +18,26 @@ import {
   planetReducer
 } from './state/ReducerContext.js'
 
+import AddSystemDialog from './components/AddSystemDialog.jsx'
 import CustomTabPanel from './components/CustomTabPanel.jsx'
-import SystemGrid from './components/SystemGrid.jsx'
 import SystemDetailsDialog from './components/SystemDetailsDialog.jsx'
+import SystemGrid from './components/SystemGrid.jsx'
 
 export default function App (props) {
   const [currentTab, setCurrentTab] = React.useState(0)
 
   const [reducer, dispatch] = React.useReducer(planetReducer, REDUCER_INIT)
 
-  const handleAddPlanetClick = (event) => {
-    event.preventDefault()
-    dispatch({ type: 'ADD', _for: 'planet' })
-  }
+  const [handleAddPlanetClick, handleAddSystemClick] = [
+    (event) => {
+      event.preventDefault()
+      dispatch({ type: 'ADD', _for: 'planet' })
+    },
+    (event) => {
+      event.preventDefault()
+      dispatch({ type: 'ADD', _for: 'system' })
+    }
+  ]
 
   const [drawerOpen, setDrawerOpen] = React.useState(false)
 
@@ -66,13 +73,7 @@ export default function App (props) {
               Add Planet
             </Button>
 
-            <Button
-              variant="contained"
-              onClick={(e) => {
-                e.preventDefault()
-                window.alert('Not Yet Implemented')
-              }}
-            >
+            <Button variant="contained" onClick={handleAddSystemClick}>
               Add System
             </Button>
           </Box>
@@ -108,7 +109,10 @@ export default function App (props) {
 
         {/* Dialogs */}
         <AddPlanetDialog />
+        <AddSystemDialog />
+
         <EditPlanetDialog />
+
         <PlanetDetailsDialog />
         <SystemDetailsDialog />
 

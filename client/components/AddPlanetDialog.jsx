@@ -28,12 +28,14 @@ import { addPlanet } from '../utils/fetcher.js'
 import { biomeDescriptors } from '../utils/descriptors.js'
 
 export default function AddPlanetDialog (props) {
-  const { showDialog, dialogTitle } = React.useContext(ReducerContext)
+  const { showDialog, dialogTitle, systemList } =
+    React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
   const sLabelID = React.useId()
 
   const handleClose = () => {
+    console.log(systemList)
     dispatch({ type: 'CLOSE_DIALOG' })
   }
 
@@ -107,7 +109,12 @@ export default function AddPlanetDialog (props) {
       <DialogContent>
         <FormBox>
           <TextField label="Planet Name" name="name" size="small" required />
-          <TextField label="System Name" name="system" size="small" required />
+          {/* <TextField label="System Name" name="system" size="small" required /> */}
+          <CustomAutocomplete
+            label="System Name"
+            name="system"
+            options={systemList}
+          />
         </FormBox>
 
         <FormBox>

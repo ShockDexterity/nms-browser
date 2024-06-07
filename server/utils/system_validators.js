@@ -55,7 +55,7 @@ export async function validateSystem (submission, editing, callback) {
     callback({ status: 400, message: `${submission.conflict} is invalid` })
     return
   }
-  cleanedSystem.conflict = submission.conflict
+  cleanedSystem.conflict = submission.conflict.toLowerCase()
 
   cleanedSystem.exosuit = !!submission.exosuit
   cleanedSystem.v3 = !!submission.v3
@@ -96,108 +96,104 @@ function checkShape (submission, extras, callback) {
 /**
  * Validates the system economy information.
  * @param {object} submission - The submission object containing the economy information.
- * @param {object} submission.economy - The economy information.
- * @param {string} submission.economy.descriptor - The economy descriptor.
- * @param {string=} submission.economy.type - The economy type.
- * @param {string} submission.economy.state - The economy state.
- * @param {string=} submission.economy.strength - The economy strength.
+ * @param {string} submission.econDescriptor - The economy descriptor.
+ * @param {string=} submission.econType - The economy type.
+ * @param {string} submission.econState - The economy state.
+ * @param {string=} submission.econStrength - The economy strength.
  * @param {object} extras - Additional information.
  * @param {boolean} extras.editing - Flag indicating whether the submission is for editing.
  * @param {function} callback - The callback function to handle the result.
  * @returns {void}
  */
 function checkEconomy (submission, extras, callback) {
-  if (!submission.economy) {
-    callback({ status: 400, message: 'No system economy information provided' })
-    return
-  }
-  const { economy: _economy } = submission
   const { editing } = extras
 
   const finalEconomy = {}
 
   // Check the system economy descriptor
-  if (!_economy.descriptor) {
+  if (!submission.econDescriptor) {
     // If no descriptor is provided, return an error
     callback({ status: 400, message: 'No system economy descriptor provided' })
     return
   }
-  else if (!(_economy.descriptor in econDescriptors)) {
+  else if (!(submission.econDescriptor in econDescriptors)) {
     // If the descriptor is invalid, return an error
     callback({
       status: 400,
-      message: `Descriptor "${_economy.descriptor}" is invalid`
+      message: `Descriptor "${submission.econDescriptor}" is invalid`
     })
     return
   }
   // If the descriptor is valid, set it
-  finalEconomy.descriptor = _economy.descriptor
+  finalEconomy.descriptor = submission.econDescriptor
 
   // Check the system economy type
   if (editing) {
     // If editing, check the type against the descriptor
-    if (!_economy.type) {
+    if (!submission.econType) {
       // If no type is provided, determine it from the descriptor
-      finalEconomy.type = econDescriptors[_economy.descriptor]
+      finalEconomy.type = econDescriptors[submission.econDescriptor]
     }
-    else if (_economy.type !== econDescriptors[_economy.descriptor]) {
+    else if (
+      submission.econType !== econDescriptors[submission.econDescriptor]
+    ) {
       // If the provided type is invalid, return an error
       callback({
         status: 400,
-        message: `Type "${_economy.type}" is invalid for descriptor "${_economy.descriptor}"`
+        message: `Type "${submission.econType}" is invalid for descriptor "${submission.econDescriptor}"`
       })
       return
     }
     else {
       // If the type is valid, set it
-      finalEconomy.type = _economy.type
+      finalEconomy.type = submission.econType
     }
   }
   else {
     // If not editing, determine the type from the descriptor
-    finalEconomy.type = econDescriptors[_economy.descriptor]
+    finalEconomy.type = econDescriptors[submission.econDescriptor]
   }
 
   // Check the system economy state
-  if (!_economy.state) {
+  if (!submission.econState) {
     // If no state is provided, return an error
     callback({ status: 400, message: 'No system economy state provided' })
     return
   }
-  else if (!(_economy.state in econStates)) {
+  else if (!(submission.econState in econStates)) {
     // If the state is invalid, return an error
     callback({
       status: 400,
-      message: `State "${_economy.state}" is invalid`
+      message: `State "${submission.econState}" is invalid`
     })
     return
   }
   // If the state is valid, set it
-  finalEconomy.state = _economy.state
+  finalEconomy.state = submission.econState
 
   // Check the system economy strength
   if (editing) {
     // If editing, check the strength against the state
-    if (!_economy.strength) {
+    if (!submission.econStrength) {
       // If no strength is provided, determine it from the state
-      finalEconomy.strength = econStates[_economy.state]
+      finalEconomy.strength = econStates[submission.econState]
     }
-    else if (_economy.strength !== econStates[_economy.state]) {
+    else if (submission.econStrength !== econStates[submission.econState]) {
       // If the provided strength is invalid, return an error
       callback({
         status: 400,
-        message: `Strength "${_economy.strength}" is invalid for state "${_economy.state}"`
+        message: `Strength "${submission.econStrength}" is invalid for state "${submission.econState}"`
       })
       return
     }
     else {
       // If the strength is valid, set it
-      finalEconomy.strength = _economy.strength
+      finalEconomy.strength = submission.econStrength
     }
   }
   else {
     // If not editing, determine the strength from the state
-    finalEconomy.strength = econStates[_economy.state]
+    finalEconomy.strength = econStates[submission.econState]
   }
 
   callback(null, finalEconomy)

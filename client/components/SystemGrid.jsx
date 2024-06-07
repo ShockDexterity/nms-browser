@@ -11,7 +11,7 @@ import { getSystems } from '../utils/fetcher.js'
 export default function SystemGrid (props) {
   const [systems, setSystems] = React.useState([])
 
-  const { refreshSystems } = React.useContext(ReducerContext)
+  const { refreshSystems, systemList } = React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
   React.useEffect(() => {
@@ -19,6 +19,14 @@ export default function SystemGrid (props) {
       try {
         const newSystems = await getSystems()
         setSystems(newSystems)
+
+        if (systemList.length === 0) {
+          const systemNames = []
+          newSystems.forEach((system) => {
+            systemNames.push(system.name)
+          })
+          dispatch({ type: 'SET_SYSTEM_LIST', list: systemNames })
+        }
       }
       catch (error) {
         console.error(error)

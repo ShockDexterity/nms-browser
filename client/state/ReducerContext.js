@@ -11,6 +11,8 @@ export const REDUCER_INIT = {
   snackbarSeverity: 'warning',
   snackbarMessage: 'Snackbar message not set',
   planet: null,
+  system: null,
+  systemList: [],
   refreshPlanets: true,
   refreshSystems: true,
   planetFilters: {},
@@ -53,7 +55,8 @@ export function planetReducer (state, action) {
     case 'ADD':
       return {
         ...state,
-        dialogTitle: 'Add a new Planet',
+        dialogTitle:
+          'Add New ' + (action._for === 'planet' ? 'Planet' : 'System'),
         showDialog: `add_${action._for}`
       }
 
@@ -72,6 +75,9 @@ export function planetReducer (state, action) {
 
     case 'SET_SYSTEM':
       return { ...state, system: action.system }
+
+    case 'SET_SYSTEM_LIST':
+      return { ...state, systemList: action.list }
 
     default:
       return state

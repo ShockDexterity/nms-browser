@@ -80,3 +80,73 @@ export const otherResources = [
   'Sodium',
   'Uranium'
 ]
+
+export const factions = ['Gek', 'Korvax', "Vy'Keen", 'None']
+
+export const conflictLevels = [
+  { label: 'Low', value: 'low' },
+  { label: 'Medium', value: 'medium' },
+  { label: 'High', value: 'high' },
+  { label: 'Outlaw', value: 'outlaw' }
+]
+
+export const econDescriptors = [
+  'Alchemical',
+  'Black Market',
+  'Commercial',
+  'Construction',
+  'Energy Supply',
+  'Engineering',
+  'Experimental',
+  'Fuel Generation',
+  'High Tech',
+  'High Voltage',
+  'Industrial',
+  'Manufacturing',
+  'Mass Production',
+  'Material Fusion',
+  'Mathematical',
+  'Mercantile',
+  'Metal Processing',
+  'Minerals',
+  'Mining',
+  'Nano-construction',
+  'None',
+  'Ore Extraction',
+  'Ore Processing',
+  'Power Generation',
+  'Prospecting',
+  'Research',
+  'Scientific',
+  'Shipping',
+  'Technology',
+  'Trading'
+]
+
+export const econStates = [
+  'Adequate',
+  'Advanced',
+  'Affluent',
+  'Balanced',
+  'Blooming',
+  'Comfortable',
+  'Declining',
+  'Destitute',
+  'Developing',
+  'Failing',
+  'Fledgling',
+  'Flourishing',
+  'High Supply',
+  'Low Supply',
+  'Medium Supply',
+  'None',
+  'Opulent',
+  'Promising',
+  'Prosperous',
+  'Satisfactory',
+  'Struggling',
+  'Sustainable',
+  'Unpromising',
+  'Unsuccessful',
+  'Wealthy'
+]

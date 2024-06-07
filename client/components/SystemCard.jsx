@@ -14,16 +14,16 @@ import {
 
 import ConflictText from './ConflictText.jsx'
 
-import { DispatchContext } from '../state/ReducerContext.js'
+import { DispatchContext, ReducerContext } from '../state/ReducerContext.js'
 import { generateSystemBorder } from '../utils/styles.js'
+import { deleteSystem } from '../utils/fetcher.js'
 
 export default function SystemCard ({ system }) {
+  const { systemList } = React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
   const handleDetailsClick = (event) => {
     event.preventDefault()
-
-    // window.alert('details not yet implemented')
 
     dispatch({ type: 'SET_SYSTEM', system })
     dispatch({ type: 'DETAILS', title: system.name, _for: 'system' })
@@ -45,36 +45,39 @@ export default function SystemCard ({ system }) {
   const handleDeleteClick = async (event) => {
     event.preventDefault()
 
-    window.alert('delete not yet implemented')
+    if (window.confirm(`Are you sure you want to delete "${system.name}"?`)) {
+      try {
+        const response = await deleteSystem(system._id)
+        if (response.error) {
+          dispatch({ type: 'HIDE_SNACKBAR' })
+          dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'error' })
+          dispatch({
+            type: 'SET_SNACKBAR_MESSAGE',
+            message: response.message
+          })
+          dispatch({ type: 'SHOW_SNACKBAR' })
+        }
+        else {
+          dispatch({ type: 'REFRESH_SYSTEMS' })
+          dispatch({ type: 'HIDE_SNACKBAR' })
+          dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
+          dispatch({
+            type: 'SET_SNACKBAR_MESSAGE',
+            message: `Deleted System "${system.name}"`
+          })
+          dispatch({ type: 'SHOW_SNACKBAR' })
 
-    // if (window.confirm(`Are you sure you want to delete "${system.name}"?`)) {
-    //   try {
-    //     const response = await deletePlanet(system._id)
-    //     if (response.error) {
-    //       dispatch({ type: 'HIDE_SNACKBAR' })
-    //       dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'error' })
-    //       dispatch({
-    //         type: 'SET_SNACKBAR_MESSAGE',
-    //         message: response.message
-    //       })
-    //       dispatch({ type: 'SHOW_SNACKBAR' })
-    //     }
-    //     else {
-    //       dispatch({ type: 'REFRESH_SYSTEMS' })
-    //       dispatch({ type: 'HIDE_SNACKBAR' })
-    //       dispatch({ type: 'SET_SNACKBAR_SEVERITY', severity: 'success' })
-    //       dispatch({
-    //         type: 'SET_SNACKBAR_MESSAGE',
-    //         message: `Deleted Planet "${system.name}"`
-    //       })
-    //       dispatch({ type: 'SHOW_SNACKBAR' })
-    //     }
-    //   }
-    //   catch (error) {
-    //     window.alert(`error deleting ${system.name}`)
-    //     console.error(error)
-    //   }
-    // }
+          dispatch({
+            type: 'SET_SYSTEM_LIST',
+            list: systemList.filter((sys) => sys !== system.name)
+          })
+        }
+      }
+      catch (error) {
+        window.alert(`error deleting ${system.name}`)
+        console.error(error)
+      }
+    }
   }
 
   return (

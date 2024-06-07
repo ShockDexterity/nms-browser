@@ -61,7 +61,16 @@ export const econStates = {
   Wealthy: 'Strong'
 }
 
-export const conflictLevels = ['low', 'medium', 'high', 'outlaw']
+export const conflictLevels = [
+  'low',
+  'medium',
+  'high',
+  'outlaw',
+  'Low',
+  'Medium',
+  'High',
+  'Outlaw'
+]
 
 // export const conflictDescriptors = {
 //   Aggressive: 'high',
