@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Box, Button, Container, Drawer, Typography } from '@mui/material'
+import { Box, Button, Container, Drawer } from '@mui/material'
 
 import AddPlanetDialog from './components/AddPlanetDialog.jsx'
 import AlertSnackbar from './components/AlertSnackbar.jsx'
@@ -23,6 +23,8 @@ import CustomTabPanel from './components/CustomTabPanel.jsx'
 import SystemDetailsDialog from './components/SystemDetailsDialog.jsx'
 import SystemGrid from './components/SystemGrid.jsx'
 import EditSystemDialog from './components/EditSystemDialog.jsx'
+import PlanetFilters from './components/PlanetFilters.jsx'
+import SystemFilters from './components/SystemFilters.jsx'
 
 export default function App (props) {
   const [currentTab, setCurrentTab] = React.useState(0)
@@ -100,12 +102,13 @@ export default function App (props) {
 
         {/* Filter Drawer */}
         <Drawer open={drawerOpen} onClose={closeDrawer}>
-          <Typography visibility={currentTab === 0 ? 'visible' : 'collapse'}>
-            Planet Filters
-          </Typography>
-          <Typography visibility={currentTab === 1 ? 'visible' : 'collapse'}>
-            System Filters
-          </Typography>
+          <PlanetFilters
+            visibility={currentTab === 0 ? 'visible' : 'collapse'}
+          />
+
+          <SystemFilters
+            visibility={currentTab === 1 ? 'visible' : 'collapse'}
+          />
         </Drawer>
 
         {/* Dialogs */}

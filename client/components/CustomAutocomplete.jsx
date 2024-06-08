@@ -12,7 +12,6 @@ export default function CustomAutocomplete ({
   if (defaultValue && !defaultValue.includes('/')) {
     return (
       <Autocomplete
-        disablePortal
         clearOnEscape
         options={options}
         defaultValue={defaultValue}
@@ -31,7 +30,6 @@ export default function CustomAutocomplete ({
 
   return (
     <Autocomplete
-      disablePortal
       clearOnEscape
       options={options}
       renderInput={(params) => (

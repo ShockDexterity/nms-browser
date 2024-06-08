@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 
 import { Box } from '@mui/material'
 
-export default function FormBox ({ children }) {
+export default function FormBox ({ alignment = 'center', children }) {
   return (
     <Box
       display="flex"
-      alignItems="center"
-      justifyContent="center"
+      alignItems={alignment}
+      justifyContent={alignment}
       sx={{
         '& .MuiTextField-root': { m: 1, width: '26ch' }
       }}
@@ -19,5 +19,6 @@ export default function FormBox ({ children }) {
 }
 
 FormBox.propTypes = {
+  alignment: PropTypes.string,
   children: PropTypes.node
 }
