@@ -16,6 +16,9 @@ export async function validateSystem (submission, editing, callback) {
   }
 
   const cleanedSystem = {}
+  if (submission._id) {
+    cleanedSystem._id = submission._id
+  }
 
   // Check the system name
   if (!submission.name) {
@@ -55,7 +58,7 @@ export async function validateSystem (submission, editing, callback) {
     callback({ status: 400, message: `${submission.conflict} is invalid` })
     return
   }
-  cleanedSystem.conflict = submission.conflict.toLowerCase()
+  cleanedSystem.conflict = submission.conflict
 
   cleanedSystem.exosuit = !!submission.exosuit
   cleanedSystem.v3 = !!submission.v3

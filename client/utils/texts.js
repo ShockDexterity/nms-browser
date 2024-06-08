@@ -83,12 +83,7 @@ export const otherResources = [
 
 export const factions = ['Gek', 'Korvax', "Vy'Keen", 'None']
 
-export const conflictLevels = [
-  { label: 'Low', value: 'low' },
-  { label: 'Medium', value: 'medium' },
-  { label: 'High', value: 'high' },
-  { label: 'Outlaw', value: 'outlaw' }
-]
+export const conflictLevels = ['Low', 'Medium', 'High', 'Outlaw']
 
 export const econDescriptors = [
   'Alchemical',
@@ -150,3 +145,17 @@ export const econStates = [
   'Unsuccessful',
   'Wealthy'
 ]
+
+export const econTypes = [
+  'Advanced Materials',
+  'Manufacturing',
+  'Mining',
+  'Outlaw',
+  'Power Generation',
+  'Scientific',
+  'Technology',
+  'Trading',
+  'Uncharted'
+]
+
+export const econStrengths = ['None', 'Weak', 'Average', 'Strong']

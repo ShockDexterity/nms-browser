@@ -28,7 +28,8 @@ import { updatePlanet } from '../utils/fetcher.js'
 import { biomeDescriptors, biomes } from '../utils/descriptors.js'
 
 export default function EditPlanetDialog (props) {
-  const { showDialog, dialogTitle, planet } = React.useContext(ReducerContext)
+  const { showDialog, dialogTitle, planet, systemList } =
+    React.useContext(ReducerContext)
   const dispatch = React.useContext(DispatchContext)
 
   const sLabelID = React.useId()
@@ -47,7 +48,6 @@ export default function EditPlanetDialog (props) {
 
     // Send the form data to the server
     try {
-      console.log('formData:', formData)
       const response = await updatePlanet(formData)
 
       if (response.error) {
@@ -115,12 +115,12 @@ export default function EditPlanetDialog (props) {
             defaultValue={planet?.name ?? ''}
             required
           />
-          <TextField
+
+          <CustomAutocomplete
             label="System Name"
             name="system"
-            size="small"
+            options={systemList}
             defaultValue={planet?.system ?? ''}
-            required
           />
         </FormBox>
 

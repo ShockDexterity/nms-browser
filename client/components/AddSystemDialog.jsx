@@ -16,6 +16,7 @@ import FormBox from './FormBox.jsx'
 import CustomAutocomplete from './CustomAutocomplete.jsx'
 
 import { DispatchContext, ReducerContext } from '../state/ReducerContext.js'
+
 import {
   conflictLevels,
   econDescriptors,
@@ -42,7 +43,6 @@ export default function AddSystemDialog (props) {
     const formData = Object.fromEntries(rawFormData.entries())
 
     // Send the form data to the server
-    console.log(formData)
     try {
       // console.log('formData', formData)
       const response = await addSystem(formData)
@@ -137,7 +137,10 @@ export default function AddSystemDialog (props) {
         <Divider sx={{ my: 0.5 }} />
 
         <FormBox>
-          <FormControlLabel label="Atlas" control={<Checkbox name="atlas" />} />
+          <FormControlLabel
+            label="Atlas System"
+            control={<Checkbox name="atlas" />}
+          />
           <FormControlLabel
             label="Black Hole"
             control={<Checkbox name="blackhole" />}

@@ -8,8 +8,6 @@ import {
   Typography
 } from '@mui/material'
 
-import ConflictText from './ConflictText.jsx'
-
 import { DispatchContext, ReducerContext } from '../state/ReducerContext.js'
 import { generateSystemBorder } from '../utils/styles.js'
 
@@ -50,11 +48,9 @@ export default function SystemDetailsDialog (props) {
 
         <Divider sx={{ my: 1 }} />
 
-        <ConflictText
-          conflict={system.conflict}
-          variant="body1"
-          color="textPrimary"
-        />
+        <Typography variant="body1">
+          Conflict Level: {system.conflict}
+        </Typography>
 
         {!system.exosuit && (
           <>

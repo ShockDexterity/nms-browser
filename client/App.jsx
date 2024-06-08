@@ -22,6 +22,7 @@ import AddSystemDialog from './components/AddSystemDialog.jsx'
 import CustomTabPanel from './components/CustomTabPanel.jsx'
 import SystemDetailsDialog from './components/SystemDetailsDialog.jsx'
 import SystemGrid from './components/SystemGrid.jsx'
+import EditSystemDialog from './components/EditSystemDialog.jsx'
 
 export default function App (props) {
   const [currentTab, setCurrentTab] = React.useState(0)
@@ -112,6 +113,7 @@ export default function App (props) {
         <AddSystemDialog />
 
         <EditPlanetDialog />
+        <EditSystemDialog />
 
         <PlanetDetailsDialog />
         <SystemDetailsDialog />

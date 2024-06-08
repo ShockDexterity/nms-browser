@@ -35,7 +35,6 @@ export default function AddPlanetDialog (props) {
   const sLabelID = React.useId()
 
   const handleClose = () => {
-    console.log(systemList)
     dispatch({ type: 'CLOSE_DIALOG' })
   }
 
@@ -48,7 +47,6 @@ export default function AddPlanetDialog (props) {
 
     // Send the form data to the server
     try {
-      // console.log('formData', formData)
       const response = await addPlanet(formData)
 
       if (response.error) {
@@ -109,7 +107,6 @@ export default function AddPlanetDialog (props) {
       <DialogContent>
         <FormBox>
           <TextField label="Planet Name" name="name" size="small" required />
-          {/* <TextField label="System Name" name="system" size="small" required /> */}
           <CustomAutocomplete
             label="System Name"
             name="system"

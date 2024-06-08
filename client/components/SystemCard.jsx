@@ -12,8 +12,6 @@ import {
   Typography
 } from '@mui/material'
 
-import ConflictText from './ConflictText.jsx'
-
 import { DispatchContext, ReducerContext } from '../state/ReducerContext.js'
 import { generateSystemBorder } from '../utils/styles.js'
 import { deleteSystem } from '../utils/fetcher.js'
@@ -32,14 +30,12 @@ export default function SystemCard ({ system }) {
   const handleEditClick = (event) => {
     event.preventDefault()
 
-    window.alert('edit not yet implemented')
-
-    // dispatch({ type: 'SET_SYSTEM',  system })
-    // dispatch({
-    //   type: 'EDIT',
-    //   title: `Edit System "${system.name}"`,
-    //   _for: 'system'
-    // })
+    dispatch({ type: 'SET_SYSTEM', system })
+    dispatch({
+      type: 'EDIT',
+      title: `Edit System "${system.name}"`,
+      _for: 'system'
+    })
   }
 
   const handleDeleteClick = async (event) => {
@@ -98,7 +94,9 @@ export default function SystemCard ({ system }) {
               {system.economy.type.replace('Advanced', 'Adv.')}
             </Typography>
 
-            <ConflictText conflict={system.conflict} />
+            <Typography variant="body2" color="textSecondary" component="p">
+              Conflict Level: {system.conflict}
+            </Typography>
           </CardContent>
         </CardActionArea>
 
