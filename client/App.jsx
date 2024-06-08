@@ -53,6 +53,11 @@ export default function App (props) {
     }
   ]
 
+  // const [exoVal, setExoVal] = React.useState(reducer.systemFilters.exosuit)
+  // const [v3Val, setV3Val] = React.useState(reducer.systemFilters.v3)
+  // const [atlasVal, setAtlasVal] = React.useState(reducer.systemFilters.atlas)
+  // const [bhVal, setBhVal] = React.useState(reducer.systemFilters.blackhole)
+
   return (
     <ReducerContext.Provider value={reducer}>
       <DispatchContext.Provider value={dispatch}>
@@ -104,10 +109,19 @@ export default function App (props) {
         <Drawer open={drawerOpen} onClose={closeDrawer}>
           <PlanetFilters
             visibility={currentTab === 0 ? 'visible' : 'collapse'}
+            drawerOpen={drawerOpen}
           />
 
           <SystemFilters
             visibility={currentTab === 1 ? 'visible' : 'collapse'}
+            // exoVal={exoVal}
+            // setExoVal={setExoVal}
+            // v3Val={v3Val}
+            // setV3Val={setV3Val}
+            // atlasVal={atlasVal}
+            // setAtlasVal={setAtlasVal}
+            // bhVal={bhVal}
+            // setBhVal={setBhVal}
           />
         </Drawer>
 

@@ -99,13 +99,37 @@ export function planetReducer (state, action) {
     case 'SET_SYSTEM_FILTER':
       return getSystemFilter(state, action)
 
+    case 'SET_SYSTEM_FILTER_EXOSUIT':
+      return {
+        ...state,
+        systemFilters: { ...state.systemFilters, exosuit: action.exosuit }
+      }
+
+    case 'SET_SYSTEM_FILTER_V3':
+      return {
+        ...state,
+        systemFilters: { ...state.systemFilters, v3: action.v3 }
+      }
+
+    case 'SET_SYSTEM_FILTER_ATLAS':
+      return {
+        ...state,
+        systemFilters: { ...state.systemFilters, atlas: action.atlas }
+      }
+
+    case 'SET_SYSTEM_FILTER_BLACKHOLE':
+      return {
+        ...state,
+        systemFilters: { ...state.systemFilters, blackhole: action.blackhole }
+      }
+
     default:
       return state
   }
 }
 
 function getPlanetFilter (state, action) {
-  if (action.biomeOrSpecial) {
+  if (existStrNull(action.biomeOrSpecial)) {
     return {
       ...state,
       planetFilters: {
@@ -114,13 +138,13 @@ function getPlanetFilter (state, action) {
       }
     }
   }
-  else if (action.stellar) {
+  else if (existStrNull(action.stellar)) {
     return {
       ...state,
       planetFilters: { ...state.planetFilters, stellar: action.stellar }
     }
   }
-  else if (action.otherResource1) {
+  else if (existStrNull(action.otherResource1)) {
     return {
       ...state,
       planetFilters: {
@@ -129,7 +153,7 @@ function getPlanetFilter (state, action) {
       }
     }
   }
-  else if (action.otherResource2) {
+  else if (existStrNull(action.otherResource2)) {
     return {
       ...state,
       planetFilters: {
@@ -144,55 +168,35 @@ function getPlanetFilter (state, action) {
 }
 
 function getSystemFilter (state, action) {
-  if (action.faction) {
+  if (existStrNull(action.faction)) {
     return {
       ...state,
-      planetFilters: { ...state.planetFilters, faction: action.faction }
+      systemFilters: { ...state.systemFilters, faction: action.faction }
     }
   }
-  else if (action.econType) {
+  else if (existStrNull(action.econType)) {
     return {
       ...state,
-      planetFilters: { ...state.planetFilters, econType: action.econType }
+      systemFilters: { ...state.systemFilters, econType: action.econType }
     }
   }
-  else if (action.econStr) {
+  else if (existStrNull(action.econStr)) {
     return {
       ...state,
-      planetFilters: { ...state.planetFilters, econStr: action.econStr }
+      systemFilters: { ...state.systemFilters, econStr: action.econStr }
     }
   }
-  else if (action.conflict) {
+  else if (existStrNull(action.conflict)) {
     return {
       ...state,
-      planetFilters: { ...state.planetFilters, conflict: action.conflict }
-    }
-  }
-  else if (action.exosuit) {
-    return {
-      ...state,
-      planetFilters: { ...state.planetFilters, exosuit: action.exosuit }
-    }
-  }
-  else if (action.v3) {
-    return {
-      ...state,
-      planetFilters: { ...state.planetFilters, v3: action.v3 }
-    }
-  }
-  else if (action.atlas) {
-    return {
-      ...state,
-      planetFilters: { ...state.planetFilters, atlas: action.atlas }
-    }
-  }
-  else if (action.blackhole) {
-    return {
-      ...state,
-      planetFilters: { ...state.planetFilters, blackhole: action.blackhole }
+      systemFilters: { ...state.systemFilters, conflict: action.conflict }
     }
   }
   else {
     return { ...state }
   }
+}
+
+function existStrNull (thing) {
+  return thing || thing === '' || thing === null
 }
