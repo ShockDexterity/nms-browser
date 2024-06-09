@@ -1,12 +1,10 @@
 import React from 'react'
 
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-  Divider,
-  Typography
-} from '@mui/material'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography'
 
 import { DispatchContext, ReducerContext } from '../state/ReducerContext.js'
 import { generateSystemBorder } from '../utils/styles.js'

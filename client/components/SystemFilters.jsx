@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  Autocomplete,
-  Box,
-  Checkbox,
-  FormControlLabel,
-  TextField
-} from '@mui/material'
+import Autocomplete from '@mui/material/Autocomplete'
+import Box from '@mui/material/Box'
+import Checkbox from '@mui/material/Checkbox'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import TextField from '@mui/material/TextField'
 
 import { DispatchContext, ReducerContext } from '../state/ReducerContext'
 

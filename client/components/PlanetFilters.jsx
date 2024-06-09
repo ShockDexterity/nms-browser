@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Autocomplete, Box, TextField } from '@mui/material'
+import Autocomplete from '@mui/material/Autocomplete'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
 
 import FormBox from './FormBox'
 

@@ -101,3 +101,49 @@ export async function deleteSystem (id) {
   })
   return await response.json()
 }
+
+export async function downloadBackups () {
+  try {
+    // get data
+    const planetData = await getPlanets()
+    const systemData = await getSystems()
+
+    // creating a file in browser
+    const planetFilename = 'planets'
+    const planetJSON = JSON.stringify(planetData, null, 2)
+    const planetBlob = new Blob([planetJSON], { type: 'application/json' })
+    const planetHREF = URL.createObjectURL(planetBlob)
+
+    // construct dummy <a> element
+    const planetLink = document.createElement('a')
+    planetLink.href = planetHREF
+    planetLink.download = planetFilename + '.json'
+
+    // add to body, click it, then remove it
+    document.body.appendChild(planetLink)
+    planetLink.click()
+    document.body.removeChild(planetLink)
+    URL.revokeObjectURL(planetHREF)
+
+    // creating a file in browser
+    const systemFilename = 'systems'
+    const systemJSON = JSON.stringify(systemData, null, 2)
+    const systemBlob = new Blob([systemJSON], { type: 'application/json' })
+    const systemHREF = URL.createObjectURL(systemBlob)
+
+    // construct dummy <a> element
+    const systemLink = document.createElement('a')
+    systemLink.href = systemHREF
+    systemLink.download = systemFilename + '.json'
+
+    // add to body, click it, then remove it
+    document.body.appendChild(systemLink)
+    systemLink.click()
+    document.body.removeChild(systemLink)
+    URL.revokeObjectURL(systemHREF)
+  }
+  catch (error) {
+    console.error(error)
+    window.alert('Failed to download backups')
+  }
+}

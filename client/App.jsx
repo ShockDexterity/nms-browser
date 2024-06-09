@@ -1,6 +1,9 @@
 import React from 'react'
 
-import { Box, Button, Container, Drawer } from '@mui/material'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import Container from '@mui/material/Container'
+import Drawer from '@mui/material/Drawer'
 
 import AddPlanetDialog from './components/AddPlanetDialog.jsx'
 import AlertSnackbar from './components/AlertSnackbar.jsx'
@@ -11,6 +14,14 @@ import PlanetGrid from './components/PlanetGrid.jsx'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 
+import AddSystemDialog from './components/AddSystemDialog.jsx'
+import CustomTabPanel from './components/CustomTabPanel.jsx'
+import EditSystemDialog from './components/EditSystemDialog.jsx'
+import PlanetFilters from './components/PlanetFilters.jsx'
+import SystemDetailsDialog from './components/SystemDetailsDialog.jsx'
+import SystemFilters from './components/SystemFilters.jsx'
+import SystemGrid from './components/SystemGrid.jsx'
+
 import {
   DispatchContext,
   REDUCER_INIT,
@@ -18,13 +29,7 @@ import {
   planetReducer
 } from './state/ReducerContext.js'
 
-import AddSystemDialog from './components/AddSystemDialog.jsx'
-import CustomTabPanel from './components/CustomTabPanel.jsx'
-import SystemDetailsDialog from './components/SystemDetailsDialog.jsx'
-import SystemGrid from './components/SystemGrid.jsx'
-import EditSystemDialog from './components/EditSystemDialog.jsx'
-import PlanetFilters from './components/PlanetFilters.jsx'
-import SystemFilters from './components/SystemFilters.jsx'
+import { downloadBackups } from './utils/fetcher.js'
 
 export default function App (props) {
   const [currentTab, setCurrentTab] = React.useState(0)
@@ -53,11 +58,6 @@ export default function App (props) {
     }
   ]
 
-  // const [exoVal, setExoVal] = React.useState(reducer.systemFilters.exosuit)
-  // const [v3Val, setV3Val] = React.useState(reducer.systemFilters.v3)
-  // const [atlasVal, setAtlasVal] = React.useState(reducer.systemFilters.atlas)
-  // const [bhVal, setBhVal] = React.useState(reducer.systemFilters.blackhole)
-
   return (
     <ReducerContext.Provider value={reducer}>
       <DispatchContext.Provider value={dispatch}>
@@ -84,6 +84,8 @@ export default function App (props) {
             <Button variant="contained" onClick={handleAddSystemClick}>
               Add System
             </Button>
+
+            <Button onClick={downloadBackups}>Backup Data</Button>
           </Box>
 
           <Box sx={{ pb: 2 }}>
@@ -109,19 +111,10 @@ export default function App (props) {
         <Drawer open={drawerOpen} onClose={closeDrawer}>
           <PlanetFilters
             visibility={currentTab === 0 ? 'visible' : 'collapse'}
-            drawerOpen={drawerOpen}
           />
 
           <SystemFilters
             visibility={currentTab === 1 ? 'visible' : 'collapse'}
-            // exoVal={exoVal}
-            // setExoVal={setExoVal}
-            // v3Val={v3Val}
-            // setV3Val={setV3Val}
-            // atlasVal={atlasVal}
-            // setAtlasVal={setAtlasVal}
-            // bhVal={bhVal}
-            // setBhVal={setBhVal}
           />
         </Drawer>
 

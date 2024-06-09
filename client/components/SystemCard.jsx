@@ -1,16 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import {
-  Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Grid,
-  Typography
-} from '@mui/material'
+import Button from '@mui/material/Button'
+import Card from '@mui/material/Card'
+import CardActionArea from '@mui/material/CardActionArea'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import CardHeader from '@mui/material/CardHeader'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 
 import { DispatchContext, ReducerContext } from '../state/ReducerContext.js'
 import { generateSystemBorder } from '../utils/styles.js'

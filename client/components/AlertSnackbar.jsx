@@ -1,6 +1,7 @@
 import React from 'react'
 
-import { Alert, Snackbar } from '@mui/material'
+import Alert from '@mui/material/Alert'
+import Snackbar from '@mui/material/Snackbar'
 
 import { DispatchContext, ReducerContext } from '../state/ReducerContext.js'
 
