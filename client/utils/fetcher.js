@@ -104,12 +104,17 @@ export async function deleteSystem (id) {
 
 export async function downloadBackups () {
   try {
+    const today = new Date(Date.now())
+    const year = today.getFullYear()
+    const month = today.getMonth() + 1
+    const day = today.getDate()
+
     // get data
     const planetData = await getPlanets()
     const systemData = await getSystems()
 
     // creating a file in browser
-    const planetFilename = 'planets'
+    const planetFilename = 'planets_backup'
     const planetJSON = JSON.stringify(planetData, null, 2)
     const planetBlob = new Blob([planetJSON], { type: 'application/json' })
     const planetHREF = URL.createObjectURL(planetBlob)
@@ -117,7 +122,7 @@ export async function downloadBackups () {
     // construct dummy <a> element
     const planetLink = document.createElement('a')
     planetLink.href = planetHREF
-    planetLink.download = planetFilename + '.json'
+    planetLink.download = `${planetFilename}_${year}_${month}_${day}.json`
 
     // add to body, click it, then remove it
     document.body.appendChild(planetLink)
@@ -126,7 +131,7 @@ export async function downloadBackups () {
     URL.revokeObjectURL(planetHREF)
 
     // creating a file in browser
-    const systemFilename = 'systems'
+    const systemFilename = 'systems_backup'
     const systemJSON = JSON.stringify(systemData, null, 2)
     const systemBlob = new Blob([systemJSON], { type: 'application/json' })
     const systemHREF = URL.createObjectURL(systemBlob)
@@ -134,7 +139,7 @@ export async function downloadBackups () {
     // construct dummy <a> element
     const systemLink = document.createElement('a')
     systemLink.href = systemHREF
-    systemLink.download = systemFilename + '.json'
+    systemLink.download = `${systemFilename}_${year}_${month}_${day}.json`
 
     // add to body, click it, then remove it
     document.body.appendChild(systemLink)
