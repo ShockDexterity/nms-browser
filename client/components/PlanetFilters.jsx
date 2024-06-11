@@ -112,6 +112,5 @@ export default function PlanetFilters ({ visibility }) {
 }
 
 PlanetFilters.propTypes = {
-  visibility: PropTypes.oneOf(['visible', 'collapse']).isRequired,
-  drawerOpen: PropTypes.bool.isRequired
+  visibility: PropTypes.oneOf(['visible', 'collapse']).isRequired
 }

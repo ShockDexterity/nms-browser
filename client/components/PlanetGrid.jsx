@@ -32,6 +32,10 @@ export default function PlanetGrid (props) {
     }
   }, [dispatch, refreshPlanets])
 
+  if (planets.length === 0) {
+    return null
+  }
+
   if (Object.values(planetFilters).some((val) => Boolean(val))) {
     let filteredPlanets = [...planets]
 

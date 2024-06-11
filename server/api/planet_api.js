@@ -17,10 +17,10 @@ export default router
 router.get('/', async (req, res) => {
   const dbPlanets = await DB.retrieveAllPlanets(database)
 
-  if (dbPlanets.length === 0) {
-    res.status(500).json({ error: 'No planets found' })
-    return
-  }
+  // if (dbPlanets.length === 0) {
+  //   res.status(500).json({ error: 'No planets found' })
+  //   return
+  // }
 
   res.status(200).json(dbPlanets)
 })

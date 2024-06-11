@@ -40,6 +40,10 @@ export default function SystemGrid (props) {
     }
   })
 
+  if (systems.length === 0) {
+    return null
+  }
+
   if (Object.values(systemFilters).some((val) => Boolean(val))) {
     let filteredPlanets = [...systems]
 

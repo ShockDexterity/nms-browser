@@ -17,10 +17,10 @@ export default router
 router.get('/', async (req, res) => {
   const dbSystems = await DB.retrieveAllSystems(database)
 
-  if (dbSystems.length === 0) {
-    res.status(500).json({ error: 'No systems found' })
-    return
-  }
+  // if (dbSystems.length === 0) {
+  //   res.status(500).json({ error: 'No systems found' })
+  //   return
+  // }
 
   res.status(200).json(dbSystems)
 })
