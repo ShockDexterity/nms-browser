@@ -27,7 +27,6 @@ export default function PlanetGrid (props) {
 
     if (refreshPlanets) {
       fetchPlanets()
-      // console.log('Refreshed')
       dispatch({ type: 'STOP_REFRESH_PLANETS' })
     }
   }, [dispatch, refreshPlanets])

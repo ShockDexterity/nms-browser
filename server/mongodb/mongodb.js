@@ -8,8 +8,9 @@ dotenv.config()
 const DB_USER = process.env.DB_USER ?? 'bad_user'
 const DB_PASS = process.env.DB_PASS ?? 'bad_password'
 const DB_SERVER = process.env.DB_SERVER ?? 'unknown'
+const DB_APP_NAME = process.env.DB_APP_NAME ?? 'unknown'
 
-const uri = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_SERVER}/?retryWrites=true&w=majority&appName=shockdexterityCluster`
+const uri = `mongodb+srv://${DB_USER}:${DB_PASS}@${DB_SERVER}/?retryWrites=true&w=majority&appName=${DB_APP_NAME}`
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {

@@ -10,6 +10,8 @@ import CardHeader from '@mui/material/CardHeader'
 import Grid from '@mui/material/Grid'
 import Typography from '@mui/material/Typography'
 
+import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material'
+
 import SentinelText from './SentinelText.jsx'
 
 import { DispatchContext } from '../state/ReducerContext.js'
@@ -92,11 +94,13 @@ export default function PlanetCard ({ planet }) {
 
         <CardActions>
           <Button size="small" color="warning" onClick={handleEditClick}>
-            Edit
+            {/* Edit */}
+            <EditIcon />
           </Button>
 
           <Button size="small" color="error" onClick={handleDeleteClick}>
-            Delete
+            {/* Delete */}
+            <DeleteIcon />
           </Button>
         </CardActions>
       </Card>
