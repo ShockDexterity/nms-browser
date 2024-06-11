@@ -123,7 +123,7 @@ export const econStates = [
   'Advanced',
   'Affluent',
   'Balanced',
-  'Blooming',
+  'Booming',
   'Comfortable',
   'Declining',
   'Destitute',

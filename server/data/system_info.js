@@ -38,7 +38,7 @@ export const econStates = {
   Advanced: 'Strong',
   Affluent: 'Strong',
   Balanced: 'Average',
-  Blooming: 'Strong',
+  Booming: 'Strong',
   Comfortable: 'Average',
   Declining: 'Weak',
   Destitute: 'Weak',
