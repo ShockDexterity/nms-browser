@@ -13,10 +13,11 @@ export async function validateSystem (submission, editing, callback) {
   }
   catch (err) {
     callback(err)
+    return
   }
 
   const cleanedSystem = {}
-  if (submission._id) {
+  if (editing) {
     cleanedSystem._id = submission._id
   }
 
@@ -69,11 +70,11 @@ export async function validateSystem (submission, editing, callback) {
 }
 
 /**
- * Checks the shape of a planet submission.
+ * Checks the shape of a system submission.
  *
- * @param {object} submission - The planet submission to be checked.
+ * @param {object} submission - The system submission to be checked.
  * @param {object} extras - Additional options for the validation.
- * @param {boolean} extras.checkID - Flag indicating whether to check the planet ID.
+ * @param {boolean} extras.checkID - Flag indicating whether to check the system ID.
  * @param {function} callback - The callback function to be called after the validation.
  * @returns {void}
  */
@@ -81,15 +82,15 @@ function checkShape (submission, extras, callback) {
   const { checkID } = extras
 
   if (!submission) {
-    callback({ status: 400, message: 'No planet provided' })
+    callback({ status: 400, message: 'No system provided' })
     return
   }
   if (typeof submission !== 'object' || Array.isArray(submission)) {
-    callback({ status: 400, message: 'Invalid planet' })
+    callback({ status: 400, message: 'Invalid system' })
     return
   }
   if (checkID && !submission._id) {
-    callback({ status: 400, message: 'No planet ID provided' })
+    callback({ status: 400, message: 'No system ID provided' })
     return
   }
 

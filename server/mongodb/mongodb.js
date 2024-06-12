@@ -31,31 +31,43 @@ export function connect (dbName) {
   }
 }
 
-export async function retrieveAllPlanets (database) {
-  const sort = { system: 1, name: 1 }
-  return await database.collection('planets').find().sort(sort).toArray()
+export async function retrieveAllFromCollection (collection, sortBy) {
+  return await collection.find().sort(sortBy).toArray()
 }
 
-export async function retrieveAllSystems (database) {
-  const sort = { name: 1 }
-  return await database.collection('systems').find().sort(sort).toArray()
+// export async function retrieveAllPlanets (database) {
+//   const sort = { system: 1, name: 1 }
+//   return await database.collection('planets').find().sort(sort).toArray()
+// }
+
+// export async function retrieveAllSystems (database) {
+//   const sort = { name: 1 }
+//   return await database.collection('systems').find().sort(sort).toArray()
+// }
+
+export async function getFromCollectionById (collection, _id) {
+  return await collection.findOne(new ObjectId(_id))
 }
 
-export async function getPlanetByName (database, name) {
-  return await database.collection('planets').findOne({ name })
+// export async function getPlanetById (database, _id) {
+//   return await database.collection('planets').findOne(new ObjectId(_id))
+// }
+
+// export async function getSystemById (database, _id) {
+//   return await database.collection('systems').findOne(new ObjectId(_id))
+// }
+
+export async function getFromCollectionByName (collection, name) {
+  return await collection.findOne({ name })
 }
 
-export async function getSystemByName (database, name) {
-  return await database.collection('systems').findOne({ name })
-}
+// export async function getPlanetByName (database, name) {
+//   return await database.collection('planets').findOne({ name })
+// }
 
-export async function getPlanetById (database, _id) {
-  return await database.collection('planets').findOne(new ObjectId(_id))
-}
-
-export async function getSystemById (database, _id) {
-  return await database.collection('systems').findOne(new ObjectId(_id))
-}
+// export async function getSystemByName (database, name) {
+//   return await database.collection('systems').findOne({ name })
+// }
 
 export async function insertPlanet (database, planet) {
   return await database.collection('planets').insertOne(planet)
@@ -65,6 +77,26 @@ export async function insertSystem (database, system) {
   return await database.collection('systems').insertOne(system)
 }
 
+export async function insertBase (database, base) {
+  return await database.collection('bases').insertOne(base)
+}
+
+export async function insertMultitool (database, multitool) {
+  return await database.collection('multitools').insertOne(multitool)
+}
+
+export async function updateItemInCollection (collection, _id, updatedData) {
+  const query = { _id: new ObjectId(_id) }
+
+  const dataWithoutId = { ...updatedData }
+  delete dataWithoutId._id
+
+  const replacer = { $set: dataWithoutId }
+
+  return await collection.updateOne(query, replacer)
+}
+
+/*
 export async function updatePlanet (database, _id, replacementData) {
   const query = { _id: new ObjectId(_id) }
 
@@ -85,6 +117,33 @@ export async function updateSystem (database, _id, replacementData) {
   const replacer = { $set: dataWithoutId }
 
   return await database.collection('systems').updateOne(query, replacer)
+}
+
+export async function updateBase (database, _id, replacementData) {
+  const query = { _id: new ObjectId(_id) }
+
+  const dataWithoutId = { ...replacementData }
+  delete dataWithoutId._id
+
+  const replacer = { $set: dataWithoutId }
+
+  return await database.collection('bases').updateOne(query, replacer)
+}
+
+export async function updateMultitool (database, _id, replacementData) {
+  const query = { _id: new ObjectId(_id) }
+
+  const dataWithoutId = { ...replacementData }
+  delete dataWithoutId._id
+
+  const replacer = { $set: dataWithoutId }
+
+  return await database.collection('multitools').updateOne(query, replacer)
+}
+*/
+
+export async function deleteFromCollectionById (collection, _id) {
+  return await collection.findOneAndDelete({ _id: new ObjectId(_id) })
 }
 
 export async function deletePlanetById (database, _id) {

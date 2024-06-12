@@ -4,6 +4,7 @@ import * as DB from '../mongodb/mongodb.js'
 import { validateSystem } from '../utils/system_validators.js'
 
 const database = DB.connect('NMSP')
+const systems = database.collection('systems')
 
 const router = Router({
   caseSensitive: false,
@@ -15,13 +16,7 @@ router.use(Express.json({ type: 'application/json' }))
 export default router
 
 router.get('/', async (req, res) => {
-  const dbSystems = await DB.retrieveAllSystems(database)
-
-  // if (dbSystems.length === 0) {
-  //   res.status(500).json({ error: 'No systems found' })
-  //   return
-  // }
-
+  const dbSystems = await DB.retrieveAllFromCollection(systems)
   res.status(200).json(dbSystems)
 })
 
@@ -32,7 +27,11 @@ router.put('/', async (req, res) => {
       return
     }
 
-    const shouldNotExist = await DB.getSystemByName(database, validSystem.name)
+    const shouldNotExist = await DB.getFromCollectionByName(
+      systems,
+      validSystem.name
+    )
+
     if (shouldNotExist) {
       res.status(400).json({ error: true, message: 'System already exists' })
       return
@@ -64,7 +63,8 @@ router.put('/edit', async (req, res) => {
       }
     })
 
-    const systemToEdit = await DB.getSystemById(database, validInfo._id)
+    const systemToEdit = await DB.getFromCollectionById(systems, validInfo._id)
+
     if (!systemToEdit) {
       res.status(400).json({ error: true, message: 'System does not exist' })
       return
@@ -90,7 +90,8 @@ router.delete('/:id', async (req, res) => {
     return
   }
 
-  const deletedSystem = await DB.deleteSystemById(database, _id)
+  const deletedSystem = await DB.deleteFromCollectionById(systems, _id)
+
   if (!deletedSystem) {
     res.status(400).json({ error: true, message: 'Unable to delete system' })
     return
