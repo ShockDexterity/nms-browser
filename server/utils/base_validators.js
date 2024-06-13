@@ -32,7 +32,7 @@ export async function validateBase (submission, editing, callback) {
   }
   cleanedBase.system = submission.system
 
-  cleanedBase.notes = submission.notes ?? ''
+  cleanedBase.notes = submission.notes?.trim() ?? ''
 
   callback(null, cleanedBase)
 }

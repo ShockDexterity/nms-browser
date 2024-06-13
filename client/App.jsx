@@ -41,6 +41,13 @@ import {
 
 import { downloadBackups } from './utils/fetcher.js'
 
+const subtitles = [
+  'Click on a planet card for more information',
+  'Click on a system card for more information',
+  'Click on a base card for more information',
+  'Click on a multitool card for more information'
+]
+
 const fabSX = { position: 'absolute', bottom: 16, right: 16 }
 
 export default function App (props) {
@@ -88,7 +95,10 @@ export default function App (props) {
       <DispatchContext.Provider value={dispatch}>
         {/* Main Container */}
         <Container>
-          <Header title={"No Man's Sky Planet Browser"} />
+          <Header
+            title={"No Man's Sky Planet Browser"}
+            subtitle={subtitles[currentTab]}
+          />
 
           {/* Action Buttons */}
           <Box
