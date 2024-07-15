@@ -59,10 +59,10 @@ export async function newPlanet (submission, callback) {
     return
   }
   cleanedPlanet.resources = {
-    special: submission.special,
-    r1: submission.r1,
-    r2: submission.r2,
-    r3: submission.r3
+    agricultural: submission.agricultural,
+    stellar: submission.stellar,
+    local: submission.local,
+    general: submission.general
   }
 
   // Check if the biome can be determined
@@ -317,39 +317,39 @@ function checkBasicInfo (submission, _, callback) {
  * @param {function} callback - The callback function to be called after validation.
  */
 function checkResourcesGeneral (submission, _, callback) {
-  if (!submission.special) {
-    callback({ status: 400, message: 'Special resource is required' })
+  if (!submission.agricultural) {
+    callback({ status: 400, message: 'Agricultural resource is required' })
     return
   }
-  if (!specialResources.includes(submission.special)) {
-    callback({ status: 400, message: 'Invalid special resource' })
-    return
-  }
-
-  if (!submission.r1) {
-    callback({ status: 400, message: 'Resource 1 is required' })
-    return
-  }
-  if (!stellarMetals.includes(submission.r1)) {
-    callback({ status: 400, message: 'Invalid resource 1' })
+  if (!specialResources.includes(submission.agricultural)) {
+    callback({ status: 400, message: 'Invalid agricultural resource' })
     return
   }
 
-  if (!submission.r2) {
-    callback({ status: 400, message: 'Resource 2 is required' })
+  if (!submission.stellar) {
+    callback({ status: 400, message: 'Stellar metal resource is required' })
     return
   }
-  if (!otherResources.includes(submission.r2)) {
-    callback({ status: 400, message: 'Invalid resource 2' })
+  if (!stellarMetals.includes(submission.stellar)) {
+    callback({ status: 400, message: 'Invalid stellar metal' })
     return
   }
 
-  if (!submission.r3) {
-    callback({ status: 400, message: 'Resource 3 is required' })
+  if (!submission.local) {
+    callback({ status: 400, message: 'Local resource is required' })
     return
   }
-  if (!otherResources.includes(submission.r3)) {
-    callback({ status: 400, message: 'Invalid resource 3' })
+  if (!otherResources.includes(submission.local)) {
+    callback({ status: 400, message: 'Invalid local resource' })
+    return
+  }
+
+  if (!submission.general) {
+    callback({ status: 400, message: 'General resource is required' })
+    return
+  }
+  if (!otherResources.includes(submission.general)) {
+    callback({ status: 400, message: 'Invalid general resource' })
     return
   }
 
@@ -624,29 +624,29 @@ function verifySpecialResource (submission, extras, callback) {
 
 /**
  * Verifies the secondary resources of a submission against the specified biome.
- * @param {{r2: string, r3: string}} submission - The submission object.
+ * @param {{local: string, general: string}} submission - The submission object.
  * @param {{biome: string}} extras - The extras object containing the biome.
  * @param {function} callback - The callback function to be called after verification.
  */
 function verifySecondaryResources (submission, extras, callback) {
   const { biome } = extras
-  const { r2, r3 } = submission
+  const { local, general } = submission
 
-  if (r2 in resourceBiomes) {
-    if (!resourceBiomes[r2].includes(biome)) {
+  if (local in resourceBiomes) {
+    if (!resourceBiomes[local].includes(biome)) {
       callback({
         status: 400,
-        message: `${r2} cannot be in the ${biome} biome`
+        message: `${local} cannot be in the ${biome} biome`
       })
       return
     }
   }
 
-  if (r3 in resourceBiomes) {
-    if (!resourceBiomes[r3].includes(biome)) {
+  if (general in resourceBiomes) {
+    if (!resourceBiomes[general].includes(biome)) {
       callback({
         status: 400,
-        message: `${r3} cannot be in the ${biome} biome`
+        message: `${general} cannot be in the ${biome} biome`
       })
       return
     }

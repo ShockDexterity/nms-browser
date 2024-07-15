@@ -64,14 +64,14 @@ export default function PlanetDetailsDialog (props) {
         <Divider sx={{ my: 1 }} />
 
         <Typography variant="body1">
-          Special Resource: {planet.resources.special}
+          Special Resource: {planet.resources.agricultural}
         </Typography>
 
         <Divider sx={{ my: 1 }} />
 
         <Typography variant="body1">
-          Resources: {planet.resources.r1} | {planet.resources.r2} |{' '}
-          {planet.resources.r3}
+          Resources: {planet.resources.stellar} | {planet.resources.local} |{' '}
+          {planet.resources.general}
         </Typography>
 
         <Divider sx={{ my: 1 }} />

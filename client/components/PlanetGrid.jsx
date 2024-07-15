@@ -41,14 +41,15 @@ export default function PlanetGrid (props) {
     if (planetFilters.biomeOrSpecial) {
       const bos = planetFilters.biomeOrSpecial
       filteredPlanets = filteredPlanets.filter(
-        (planet) => planet.biome === bos || planet.resources.special === bos
+        (planet) =>
+          planet.biome === bos || planet.resources.agricultural === bos
       )
     }
 
     if (planetFilters.stellar) {
       const stellar = planetFilters.stellar
       filteredPlanets = filteredPlanets.filter(
-        (planet) => planet.resources.r1 === stellar
+        (planet) => planet.resources.stellar === stellar
       )
     }
 

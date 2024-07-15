@@ -150,31 +150,31 @@ export default function EditPlanetDialog (props) {
 
         <FormBox>
           <CustomAutocomplete
-            label="Special Resource"
-            name="special"
+            label="Agricultural Resource"
+            name="agricultural"
             options={specialResources}
-            defaultValue={planet?.resources?.special ?? 'None'}
+            defaultValue={planet?.resources?.agricultural ?? 'None'}
           />
           <CustomAutocomplete
-            label="Resource 1"
-            name="r1"
+            label="Stellar Metal"
+            name="stellar"
             options={stellarMetals}
-            defaultValue={planet?.resources?.r1 ?? ''}
+            defaultValue={planet?.resources?.stellar ?? ''}
           />
         </FormBox>
 
         <FormBox>
           <CustomAutocomplete
-            label="Resource 2"
-            name="r2"
+            label="Local Resource"
+            name="local"
             options={otherResources}
-            defaultValue={planet?.resources?.r2 ?? ''}
+            defaultValue={planet?.resources?.local ?? ''}
           />
           <CustomAutocomplete
-            label="Resource 3"
-            name="r3"
+            label="Other Resource"
+            name="general"
             options={otherResources}
-            defaultValue={planet?.resources?.r3 ?? ''}
+            defaultValue={planet?.resources?.general ?? ''}
           />
         </FormBox>
 

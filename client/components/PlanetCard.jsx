@@ -120,10 +120,10 @@ PlanetCard.propTypes = {
     extreme: PropTypes.bool.isRequired,
     infested: PropTypes.bool.isRequired,
     resources: PropTypes.exact({
-      special: PropTypes.string.isRequired,
-      r1: PropTypes.string.isRequired,
-      r2: PropTypes.string.isRequired,
-      r3: PropTypes.string.isRequired
+      agricultural: PropTypes.string.isRequired,
+      stellar: PropTypes.string.isRequired,
+      local: PropTypes.string.isRequired,
+      general: PropTypes.string.isRequired
     }),
     sentinels: PropTypes.string.isRequired,
     system: PropTypes.string.isRequired
