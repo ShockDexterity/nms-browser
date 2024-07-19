@@ -8,7 +8,7 @@ import Drawer from '@mui/material/Drawer'
 import Fab from '@mui/material/Fab'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
-import Typography from '@mui/material/Typography'
+// import Typography from '@mui/material/Typography'
 
 // MUI Icons
 import {
@@ -127,8 +127,8 @@ export default function App (props) {
             >
               <Tab label="Planets" />
               <Tab label="Systems" />
-              <Tab label="Bases" />
-              <Tab label="Multitools" />
+              {/* <Tab label="Bases" /> */}
+              {/* <Tab label="Multitools" /> */}
             </Tabs>
           </Box>
 
@@ -139,12 +139,12 @@ export default function App (props) {
             <CustomTabPanel value={currentTab} index={1}>
               <SystemGrid />
             </CustomTabPanel>
-            <CustomTabPanel value={currentTab} index={2}>
+            {/* <CustomTabPanel value={currentTab} index={2}>
               <Typography>Base tab</Typography>
-            </CustomTabPanel>
-            <CustomTabPanel value={currentTab} index={3}>
+            </CustomTabPanel> */}
+            {/* <CustomTabPanel value={currentTab} index={3}>
               <Typography>Multitool tab</Typography>
-            </CustomTabPanel>
+            </CustomTabPanel> */}
           </>
           {/* End Tabs */}
         </Container>
